@@ -1,1 +1,11 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
 
+.hf-md {
+  height: 90vh;
+}
+
+@media screen and (max-width: 768px) {
+  .hf-md {
+    height: 15vh;
+  }
+}

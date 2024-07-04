@@ -8,21 +8,22 @@ import GroupRelations from "./pages/GroupRelations"
 import GroupRequests from "./pages/GroupRequests"
 import GroupSettings from "./pages/GroupSettings"
 import GroupUsers from "./pages/GroupUsers"
+import { useUserContext } from "./context/UserProvider"
 
 function SigninRedirect({ redirectPath = '/signin', children}) {
-    //const { user } = useUserContext();
+    const { user } = useUserContext();
 
-    if(true) {
+    if(!user.email) {
         return <Navigate to={redirectPath} replace />;
     }
 
     return children ? children : <Outlet/>;
 }
 
-function UserRedirect({ redirectPath = '/user', children }) {
-    //const { user } = useUserContext();
+function UserRedirect({ redirectPath = '/', children }) {
+    const { user } = useUserContext();
 
-    if(false) {
+    if(user.email) {
         return <Navigate to={redirectPath} replace />;
     }
 
