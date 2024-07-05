@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import UserProfileImage from "../elements/UserProfileImage";
 import { useState, useEffect } from "react";
 
-export default function NavBar({create=true, profile=true, search=false, title="LocalSquare", onSearch, onCreate}) {
+export default function NavBar({create=true, profile=true, showSearch=false, title="LocalSquare", onSearch, onCreate, setShowFilter, search}) {
     const [width, setWidth] = useState(window.innerWidth);
 
     //Change width state variable when screen in resized
@@ -24,11 +24,13 @@ export default function NavBar({create=true, profile=true, search=false, title="
                 <Navbar.Toggle/>
                 <Navbar.Collapse>
                     <h1 className="position-absolute fs-3 fw-medium px-50">{title}</h1>
-                    {search && width > 500 &&
+                    {showSearch && width > 500 &&
                         <Form className="position-absolute fs-3 fw-medium px-50">
                             <Form.Control
                                 type="text"
+                                value={search}
                                 onChange={(e) => {onSearch(e.target.value)}}
+                                onFocus={() => setShowFilter(true)}
                                 placeholder="Search"
                                 className=" mr-sm-2"
                                 style={{width: "30vw"}}

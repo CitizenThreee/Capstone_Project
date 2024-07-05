@@ -10,15 +10,15 @@ export default function User() {
     const { user, handleSetUser } = useUserContext();
     const navigate = useNavigate();
 
-    const [ pfp, setPfp] = useState();
-    const [ fname, setFname] = useState();
-    const [ lname, setLname] = useState();
-    const [ email, setEmail] = useState();
-    const [ phone, setPhone] = useState();
-    const [ website, setWebsite] = useState();
-    const [ occupation, setOccupation] = useState();
-    const [ about, setAbout] = useState();
-    const [ location, setLocation] = useState();
+    const [ pfp, setPfp] = useState("");
+    const [ fname, setFname] = useState("");
+    const [ lname, setLname] = useState("");
+    const [ email, setEmail] = useState("");
+    const [ phone, setPhone] = useState("");
+    const [ website, setWebsite] = useState("");
+    const [ occupation, setOccupation] = useState("");
+    const [ about, setAbout] = useState("");
+    const [ location, setLocation] = useState("");
 
     function SetDefaults() {
         setPfp(user.pfp);
