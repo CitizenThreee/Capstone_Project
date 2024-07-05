@@ -1,7 +1,6 @@
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Image } from 'react-bootstrap';
 
 export default function SignUpProfileForm({ setStage, pfp, setPfp, occupation, setOccupation, website, setWebsite, about, setAbout }) {

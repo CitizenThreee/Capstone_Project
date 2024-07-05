@@ -18,7 +18,7 @@ export default function SignInContainer() {
         fname: "Aedan",
         lname: "Beisly",
         phone: "02102608347",
-        pfp: "/avatar_placeholder.jpg",
+        pfp: "/headshot.JPG",
         occupation: "Software Engineer",
         website: "CitizenThreee.github.io",
         about: "This is me!"

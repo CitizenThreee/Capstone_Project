@@ -1,11 +1,16 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
+.px-50 {
+  left: 50%; 
+  transform: translateX(-50%);
+}
+
 .hf-md {
-  height: 90vh;
+  min-height: 90vh;
 }
 
 @media screen and (max-width: 768px) {
   .hf-md {
-    height: 15vh;
+    min-height: 15vh;
   }
 }

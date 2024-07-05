@@ -1,12 +1,15 @@
 import './App.css'
 import AppRoutes from './AppRoutes'
 import { UserProvider } from './context/UserProvider'
+import { UserGroupsProvider } from './context/UserGroupsProvider'
 
 function App() {
   return (
     <>
       <UserProvider>
-        <AppRoutes></AppRoutes>
+        <UserGroupsProvider>
+          <AppRoutes></AppRoutes>
+        </UserGroupsProvider>
       </UserProvider>
     </>
   )
