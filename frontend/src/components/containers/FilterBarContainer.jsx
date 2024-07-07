@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, CloseButton, Col, Form, Row, Dropdown } from "react-bootstrap"
+import { CloseButton, Form } from "react-bootstrap"
 
 
 export default function FilterBarContainer({ setShowFilter }) {
@@ -10,8 +10,8 @@ export default function FilterBarContainer({ setShowFilter }) {
 
     return(
         <>
-            <div className="d-flex flex-column" style={{backgroundColor: "#eee"}}>
-                <div className="rounded-3 mx-auto mt-2 d-flex align-items-center justify-content-between px-3" style={{height: "40px", width: "100%", maxWidth: "1000px", backgroundColor: "#ddd"}}>
+            <div className="d-flex flex-column" style={{ position: "sticky", top: -5, zIndex: 2}}>
+                <div className="rounded-3 mx-auto mt-2 d-flex align-items-center justify-content-between px-3 border border-dark" style={{height: "40px", width: "100%", maxWidth: "1000px", backgroundColor: "#f5f5f5dd"}}>
                     <Form className="d-flex justify-content-evenly" style={{width: "90%"}}>
                         <Form.Group className="d-flex align-items-center" controlId="filterDistance" >
                             <Form.Label column className="me-2">Distance</Form.Label>

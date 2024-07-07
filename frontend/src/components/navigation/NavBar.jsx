@@ -19,7 +19,7 @@ export default function NavBar({create=true, profile=true, showSearch=false, tit
 
     return(
         <>
-            <Navbar className="pe-3 ps-3" style={{ backgroundColor: "#ddd", height: "10vh"}}>
+            <Navbar className="pe-3 ps-3" style={{ backgroundColor: "#ddd", height: "60px"}}>
                 <Navbar.Brand><LocalSquareLogo></LocalSquareLogo></Navbar.Brand>
                 <Navbar.Toggle/>
                 <Navbar.Collapse>

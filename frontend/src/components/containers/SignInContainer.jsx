@@ -6,18 +6,21 @@ import { useUserGroupsContext } from '../../context/UserGroupsProvider';
 
 const groups = [
     {
+      id: 1,
       name: "Tech Innovators",
       description: "A group for tech enthusiasts to share ideas and work on projects together.",
       location: "San Francisco",
       bannerImageURL: "https://static.vecteezy.com/system/resources/previews/000/693/934/original/dark-blue-technology-and-high-tech-abstract-background-vector.jpg"
     },
     {
+      id: 2,
       name: "Cycling Club",
       description: "Weekly cycling trips and events for cyclists of all levels.",
       location: "Portland",
       bannerImageURL: "https://omgnepal.com/wp-content/uploads/2020/07/Best-Beginner-Road-Bikes-gear-patrol-full-lead.jpg"
     },
     {
+      id: 3,
       name: "Gaming Guild",
       description: "Connect with fellow gamers for multiplayer sessions and game nights.",
       location: "Boston",
@@ -64,7 +67,6 @@ export default function SignInContainer() {
                 location: "",
                 about: mockData.about
             });
-            console.log(groups);
             handleSetUserGroups(groups);
             navigate('/');
         }

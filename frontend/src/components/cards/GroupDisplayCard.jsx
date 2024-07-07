@@ -7,8 +7,8 @@ export default function GroupDisplayCard({ data }) {
 
     return (
         <>
-            <Card as="button" bg="light" border="primary" text="dark" className="mb-2 text-start fw-semibold fs-5" onClick={() => setExpanded(!expanded)} style={{ width: "45rem", maxWidth: "95vw" }}>
-                <Card.Header style={{width: "100%"}}>{data && data.name}</Card.Header>
+            <Card as="button" bg="light" border="primary" text="dark" className="mb-2 text-start fw-semibold" onClick={() => setExpanded(!expanded)} style={{ width: "45rem", maxWidth: "95vw" }}>
+                <Card.Header className="fs-5" style={{width: "100%"}}>{data && data.name}</Card.Header>
                 <Card.Img className="rounded-0" src={data && data.bannerImageURL} style={{height: "130px", objectFit: "cover"}}/>
                 <div className="position-absolute hoverview" style={{height: "100%", width: "100%" }}></div>
                 {expanded && <Card.Body className="py-1 px-2 d-flex flex-column" style={{ maxHeight: "100%", overflow: "hidden", width: "100%"}}>

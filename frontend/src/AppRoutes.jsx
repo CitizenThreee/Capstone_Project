@@ -9,6 +9,7 @@ import GroupRequests from "./pages/GroupRequests"
 import GroupSettings from "./pages/GroupSettings"
 import GroupUsers from "./pages/GroupUsers"
 import { useUserContext } from "./context/UserProvider"
+import CreateGroup from "./pages/CreateGroup"
 
 function SigninRedirect({ redirectPath = '/signin', children}) {
     const { user } = useUserContext();
@@ -37,6 +38,7 @@ export default function AppRoutes(props) {
             <Route path="user" element={<SigninRedirect><User {...props}></User></SigninRedirect>}/>
             <Route path="signin" element={<UserRedirect><SignIn {...props}></SignIn></UserRedirect>}/>
             <Route path="signup" element={<UserRedirect><SignUp {...props}></SignUp></UserRedirect>}/>
+            <Route path="create" element={<SigninRedirect><CreateGroup {...props}></CreateGroup></SigninRedirect>}/>
             <Route path=":groupId" element={<SigninRedirect><Group {...props}></Group></SigninRedirect>}/>
             <Route path=":groupId/settings" element={<SigninRedirect><GroupSettings {...props}></GroupSettings></SigninRedirect>}/>
             <Route path=":groupId/users" element={<SigninRedirect><GroupUsers {...props}></GroupUsers></SigninRedirect>}/>

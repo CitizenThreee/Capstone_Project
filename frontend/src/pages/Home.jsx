@@ -1,11 +1,8 @@
 import NavBar from "../components/navigation/NavBar"
 import DefaultPageContainer from "../components/containers/DefaultPageContainer"
 import { useUserContext } from "../context/UserProvider"
-import GroupDisplayCard from "../components/cards/GroupDisplayCard";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { useEffect, useState } from "react";
-import FilterBarContainer from "../components/containers/FilterBarContainers";
+import FilterBarContainer from "../components/containers/FilterBarContainer";
 import { useUserGroupsContext } from "../context/UserGroupsProvider";
 import UserGroupsContainer from "../components/containers/UserGroupsContainer";
 import GroupSearchContainer from "../components/containers/GroupSearchContainer";
@@ -78,9 +75,9 @@ export default function Home() {
     const { user } = useUserContext();
     const { userGroups } = useUserGroupsContext();
     const [ searching, setSearching ] = useState(false);
-    const [search, setSearch] = useState("");
-    const [filters, setFilters] = useState({});
-    const [showFilter, setShowFilter] = useState(false);
+    const [ search, setSearch ] = useState("");
+    const [ filters, setFilters ] = useState({});
+    const [ showFilter, setShowFilter ] = useState(false);
     
     const onSearch = (value) => {
         setSearch(value);
@@ -93,11 +90,14 @@ export default function Home() {
             <div>
                 <NavBar create={user.email ? true : false} showSearch={user.email} title="" setShowFilter={setShowFilter} search={search} onSearch={onSearch}></NavBar>
 
-                {showFilter && <FilterBarContainer setShowFilter={setShowFilter}></FilterBarContainer>}
-
-                <DefaultPageContainer text={user.email ? "" : "You are not signed in"} link={user.email ? "" : "sign in"}>
-                    {!showFilter ? <UserGroupsContainer data={userGroups}></UserGroupsContainer> : <GroupSearchContainer data={groups}></GroupSearchContainer>}
-                </DefaultPageContainer>
+                <div style={{overflow: "auto", backgroundColor: "#eee"}}>
+                    <DefaultPageContainer text={user.email ? "" : "You are not signed in"} link={user.email ? "" : "sign in"}>
+                        {showFilter && <FilterBarContainer setShowFilter={setShowFilter}></FilterBarContainer>}
+                        {user.email && !showFilter && <UserGroupsContainer data={userGroups}></UserGroupsContainer>}
+                        {user.email && showFilter && <GroupSearchContainer data={groups}></GroupSearchContainer>}
+                    </DefaultPageContainer>
+                </div>
+                
             </div>
         </>
     )

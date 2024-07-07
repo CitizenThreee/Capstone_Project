@@ -6,7 +6,7 @@
 }
 
 .hf-md {
-  min-height: 90vh;
+  height: calc(100vh - 100px);
 }
 
 .hoverview:hover {

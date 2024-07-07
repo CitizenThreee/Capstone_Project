@@ -1,5 +1,5 @@
-export default function GroupRequests() {
-    return(
+export default function CreateGroup() {
+    return (
         <>
             <DefaultPageContainer>
                 
