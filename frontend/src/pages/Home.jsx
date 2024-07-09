@@ -6,6 +6,7 @@ import FilterBarContainer from "../components/containers/FilterBarContainer";
 import { useUserGroupsContext } from "../context/UserGroupsProvider";
 import UserGroupsContainer from "../components/containers/UserGroupsContainer";
 import GroupSearchContainer from "../components/containers/GroupSearchContainer";
+import { useNavigate } from "react-router-dom";
 
 const groups = 
 [
@@ -72,6 +73,7 @@ const groups =
 ]
 
 export default function Home() {
+    const navigate = useNavigate();
     const { user } = useUserContext();
     const { userGroups } = useUserGroupsContext();
     const [ searching, setSearching ] = useState(false);
@@ -82,13 +84,17 @@ export default function Home() {
     const onSearch = (value) => {
         setSearch(value);
     }
+
+    const onCreate =() => {
+        navigate("/create")
+    }
     
     useEffect(() => {setSearch("")}, [showFilter])
 
     return(
         <>
             <div>
-                <NavBar create={user.email ? true : false} showSearch={user.email} title="" setShowFilter={setShowFilter} search={search} onSearch={onSearch}></NavBar>
+                <NavBar create={user.email ? true : false} showSearch={user.email} title="" setShowFilter={setShowFilter} search={search} onSearch={onSearch} onCreate={onCreate}></NavBar>
 
                 <div style={{overflow: "auto", backgroundColor: "#eee"}}>
                     <DefaultPageContainer text={user.email ? "" : "You are not signed in"} link={user.email ? "" : "sign in"}>

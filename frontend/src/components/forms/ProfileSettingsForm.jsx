@@ -40,8 +40,8 @@ export default function ProfileSettingsForm(params) {
                         <Form.Control as="textarea" value={params.about} onChange={(e) => params.setAbout(e.target.value)} rows={3} className="mb-2" placeholder={params.about} size="sm" maxLength={800} style={{ resize: "none" }} />
                     </Form.Group>
                     <ButtonGroup>
-                        <Button onClick={params.onCancel}>cancel</Button>
-                        <Button onClick={params.onSave}>save</Button>
+                        <Button variant="outline-danger" onClick={params.onCancel}>cancel</Button>
+                        <Button variant="outline-primary" onClick={params.onSave}>save</Button>
                     </ButtonGroup>
                 </Row>
             </Form>

@@ -1,4 +1,4 @@
-export default function GridContainer() {
+export default function MultiChatTab() {
     return(
         <>
             

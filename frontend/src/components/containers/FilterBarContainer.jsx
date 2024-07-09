@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { CloseButton, Form } from "react-bootstrap"
 
-
 export default function FilterBarContainer({ setShowFilter }) {
     const [ members, setMembers ] = useState(0);
     const [ distance, setDistance ] = useState(0);

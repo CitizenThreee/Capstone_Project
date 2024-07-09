@@ -1,12 +1,12 @@
 import NavBar from "../components/navigation/NavBar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUserGroupsContext } from "../context/UserGroupsProvider";
 import TabBar from "../components/navigation/TabBar";
 import { useEffect, useState } from "react";
-import FeedContainer from "../components/tabs/FeedContainer";
-import GridContainer from "../components/tabs/GridContainer";
-import PageContainer from "../components/tabs/PageContainer";
-import SingleChatContainer from "../components/tabs/SingleChatContainer";
+import FeedTab from "../components/tabs/FeedTab";
+import GridTab from "../components/tabs/GridTab";
+import PageTab from "../components/tabs/PageTab";
+import SingleChatTab from "../components/tabs/SingleChatTab";
 import DefaultPageContainer from "../components/containers/DefaultPageContainer"
 
 const tabs = [
@@ -34,27 +34,32 @@ const tabs = [
 
 export default function Group() {
     const { groupId } = useParams();
+    const navigate = useNavigate();
     const { userGroups } = useUserGroupsContext();
     const [ currentTab, setCurrentTab ] = useState(tabs[0])
     const [ currentTabComponent, setCurrentTabComponent ] = useState()
 
     const changeTab = (id) => { setCurrentTab(tabs.find(tab => tab.id == id)) }
 
+    const onCreate = () => {
+        navigate("create");
+    }
+
     useEffect(() => {
         let tab;
 
         switch(currentTab.type){
             case "page":
-                tab = <PageContainer tabId={currentTab.id}></PageContainer>
+                tab = <PageTab tabId={currentTab.id}></PageTab>
                 break;
             case "feed":
-                tab = <FeedContainer tabId={currentTab.id}></FeedContainer>
+                tab = <FeedTab tabId={currentTab.id}></FeedTab>
                 break;
             case "chat":
-                tab = <SingleChatContainer tabId={currentTab.id}></SingleChatContainer>
+                tab = <SingleChatTab tabId={currentTab.id}></SingleChatTab>
                 break;
             case "grid":
-                tab = <GridContainer tabId={currentTab.id}></GridContainer>
+                tab = <GridTab tabId={currentTab.id}></GridTab>
                 break;
         }
 
@@ -63,8 +68,8 @@ export default function Group() {
 
     return(
         <>
-            <NavBar title={userGroups.length && userGroups.find(group => group.id == groupId).name} create={false}></NavBar>
-            <TabBar tabs={tabs} setCurrentTab={changeTab}></TabBar>
+            <NavBar title={userGroups.length && userGroups.find(group => group.id == groupId).name} create={false} group={true}></NavBar>
+            <TabBar tabs={tabs} setCurrentTab={changeTab} currentTab={currentTab} onCreate={onCreate}></TabBar>
             <DefaultPageContainer offset="100">
                 {currentTabComponent}
             </DefaultPageContainer>

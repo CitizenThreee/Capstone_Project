@@ -1,4 +1,4 @@
-export default function Comment({comment}) {
+export default function Comment({data}) {
     return(
         <>
             

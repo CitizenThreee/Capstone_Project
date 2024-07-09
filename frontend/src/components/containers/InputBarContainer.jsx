@@ -17,7 +17,7 @@ export default function InputBarContainer({title=true, description=false, onPost
                         onChange={(e) => setInput({...input, title: e.target.value})}
                         placeholder="Message"
                     />}
-                    <Button variant="outline-secondary ms-2" onClick={() => { onPost(input); setInput({title: "", description: ""}) }}>
+                    <Button variant="outline-primary ms-2" onClick={() => { onPost(input); setInput({title: "", description: ""}) }}>
                         Send
                     </Button>
                 </Form.Group>

@@ -20,7 +20,7 @@ const mockChatContent = [
     },
 ]
 
-export default function SingleChatContainer() {
+export default function SingleChatTab() {
     const scrollRef = useRef(null);
     const [ messages, setMessages ] = useState(mockChatContent);
 

@@ -66,7 +66,7 @@ const mockFeedContent = [
     }
   ]
 
-export default function FeedContainer() {
+export default function FeedTab() {
     const scrollRef = useRef(null);
     const [ feed, setFeed ] = useState(mockFeedContent);
 

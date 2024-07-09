@@ -1,13 +1,13 @@
-import CreateGroupContainer from "../components/containers/CreateGroupContainer";
+import CreateTabContainer from "../components/containers/CreateTabContainer";
 import DefaultPageContainer from "../components/containers/DefaultPageContainer";
 import NavBar from "../components/navigation/NavBar";
 
-export default function CreateGroup() {
-    return (
+export default function CreateTab() {
+    return( 
         <>
             <NavBar title="Create" create={false}></NavBar>
             <DefaultPageContainer>
-                <CreateGroupContainer></CreateGroupContainer>
+                <CreateTabContainer></CreateTabContainer>
             </DefaultPageContainer>
         </>
     )

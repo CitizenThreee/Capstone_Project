@@ -31,7 +31,7 @@ const mockData = [
     },
 ]
 
-export default function PageContainer() {
+export default function PageTab() {
     const scrollRef = useRef(null);
     const [ elements, setElements ] = useState(mockData);
 
@@ -43,9 +43,9 @@ export default function PageContainer() {
         <>
             <div className="d-flex flex-column align-items-center justify-content-between py-3 px-1 rounded-3" style={{ width: "100%", maxWidth: "1000px", backgroundColor: "#f5f5f5", height: "calc(100% - 20px)", marginTop: "20px" }}>
                 <div className="overflow-auto mb-1" ref={scrollRef}>
-                    {elements.length && elements.map(item => {
-                        if (item.type == "image") { return (<Image data={item}></Image>); }
-                        if (item.type == "text") { return (<Text data={item}></Text>); }
+                    {elements.length && elements.map((item, index) => {
+                        if (item.type == "image") { return (<Image key={index} data={item}></Image>); }
+                        if (item.type == "text") { return (<Text key={index} data={item}></Text>); }
                     })}
                 </div>
                 
