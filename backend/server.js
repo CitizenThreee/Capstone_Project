@@ -9,11 +9,11 @@ const tabRoutes = require('./routes/tabRoutes');
 const contentRoutes = require('./routes/contentRoutes');
 
 app.use(express.json());
-app.use('/users', userRoutes)
-app.use('/groups', userRoutes)
-app.use('/user-groups', userRoutes)
-app.use('/tabs', userRoutes)
-app.use('/content', userRoutes)
+app.use('/users', userRoutes);
+app.use('/groups', groupRoutes);
+app.use('/userGroups', userGroupRoutes);
+app.use('/tabs', tabRoutes);
+app.use('/content', contentRoutes);
 
 
 // set port, listen for requests

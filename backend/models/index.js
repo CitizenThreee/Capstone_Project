@@ -2,8 +2,8 @@
 
 module.exports = {
     User: require('./user'),
-    User: require('./group'),
-    User: require('./userGroup'),
-    User: require('./tab'),
-    User: require('./content')
+    Group: require('./group'),
+    UserGroup: require('./userGroup'),
+    Tab: require('./tab'),
+    Content: require('./content')
 };
