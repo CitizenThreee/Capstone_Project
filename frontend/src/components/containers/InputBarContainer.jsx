@@ -16,7 +16,7 @@ const defaultInputs = {
     size: 'header',
 }
 
-export default function InputBarContainer({perms={}, schema={}}) {
+export default function InputBarContainer({perms={fpost: [], rpost: []}, schema={}, onPost}) {
     const { currentTab, handleSetCurrentTab } = useCurrentTabContext();
     const { user } = useUserContext();
     const { currentGroup } = useCurrentGroupContext();
@@ -36,17 +36,6 @@ export default function InputBarContainer({perms={}, schema={}}) {
         })
     }
 
-    const onCheckStatus = () => {
-        if(perms.fpost.length < 1 && perms.rpost.length < 1) return 'approved'
-        for(let i = 0; i < perms.fpost.length; i++){
-            if(user.groupProfile.roles.includes(perms.fpost[i])){
-                return 'approved'
-            }
-        }
-
-        return 'pending'
-    }
-
     const onCheckPermissions = () => {
         if(perms.fpost.length < 1 && perms.rpost.length < 1) return true
         for(let i = 0; i < user.groupProfile.roles.length; i++){
@@ -56,25 +45,6 @@ export default function InputBarContainer({perms={}, schema={}}) {
         }
 
         return false
-    }
-
-    const onPost = () => {
-        const newContent = {
-            ...input,
-            type: schema.type != 'page' ? schema.type : input.type, 
-            status: schema.type == 'page' ? 'approved' : onCheckStatus(),
-            authorId: user._id,
-            parentId: currentTab.tab._id,
-            groupId: currentGroup._id
-        }
-
-        axios.post('http://localhost:8080/content', { ...newContent })
-            .then(res => {
-                if(res.data.data.status == 'approved'){
-                    handleSetCurrentTab({...currentTab, content: [ ...currentTab.content, res.data.data ]})
-                }
-            })
-            .catch(err => console.log(err))
     }
 
     if(!onCheckPermissions()) return (<></>)
@@ -110,7 +80,7 @@ export default function InputBarContainer({perms={}, schema={}}) {
                     </InputGroup>
                     
                     <Button variant="outline-primary ms-2" onClick={() => {
-                        onPost();
+                        onPost({input: {...input}, type: schema.type, perms: {...perms}});
                         setInput({ ...defaultInputs });
                     }}>
                         Send

@@ -23,7 +23,7 @@ export default function Content({data, binBtn=true}) {
     }
 
     return (
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center mb-2">
             {data.type == 'alert' && <AlertPost data={data}></AlertPost>}
             {data.type == 'post' && <Post data={data}></Post>}
             {data.type == 'message' && <Message data={data}></Message>}

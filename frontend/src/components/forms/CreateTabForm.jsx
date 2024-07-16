@@ -60,7 +60,6 @@ export default function CreateTabForm({ onCreate, onCancel }) {
                     <Dropdown.Item active={input.type == "page"} onClick={() => onChangeInput("type", "page")}> Page </Dropdown.Item>
                     <Dropdown.Item active={input.type == "feed"} onClick={() => onChangeInput("type", "feed")}> Feed </Dropdown.Item>
                     <Dropdown.Item active={input.type == "chat"} onClick={() => onChangeInput("type", "chat")}> Chat </Dropdown.Item>
-                    <Dropdown.Item active={input.type == "grid"} onClick={() => onChangeInput("type", "grid")}> Grid </Dropdown.Item>
                 </ContentFormDropdown>
                 
                 <FormLabel className="mx-auto fs-3 fw-semibold mb-3">Permissions</FormLabel>
@@ -72,23 +71,23 @@ export default function CreateTabForm({ onCreate, onCancel }) {
                     ))}
                 </ContentFormDropdown>
 
-                <ContentFormDropdown title={"Post Freely"} value={input.fpost.length ? input.fpost.map(item => item + " | ") : "all"}>
+                {input.type != 'chat' && <ContentFormDropdown title={"Post Freely"} value={input.fpost.length ? input.fpost.map(item => item + " | ") : "all"}>
                     {currentGroup.roles.map((option, i) => (
                         <Dropdown.Item disabled={input.rpost.includes(option)} key={i} onClick={(e) => onToggleDropdown(e, "fpost", option)} active={input.fpost.includes(option)}>
                             {option}
                         </Dropdown.Item>
                     ))}
-                </ContentFormDropdown>
+                </ContentFormDropdown>}
                 
-                <ContentFormDropdown title={"Request To Post"} value={input.rpost.length ? input.rpost.map(item => item + " | ") : "none"}>
+                {input.type == 'feed' && <ContentFormDropdown title={"Request To Post"} value={input.rpost.length ? input.rpost.map(item => item + " | ") : "none"}>
                     {currentGroup.roles.map((option, i) => (
                         <Dropdown.Item disabled={input.fpost.includes(option)} key={i} onClick={(e) => onToggleDropdown(e, "rpost", option)} active={input.rpost.includes(option)}>
                             {option}
                         </Dropdown.Item>
                     ))}
-                </ContentFormDropdown>
+                </ContentFormDropdown>}
 
-                {(input.type == "feed" || input.type == "grid") && <div className="d-flex flex-column mb-3">
+                {input.type == "feed" && <div className="d-flex flex-column mb-3">
                     <FormLabel className="mx-auto fs-3 fw-semibold">Content</FormLabel>
                     {input.contentSchema.map((item, i) => (
                         <ContentFormElement key={i} i={i} input={input} onSetInput={onSetInput} defaultContent={defaultContent}/>

@@ -12,9 +12,9 @@ export default function ProfileSettingsForm({params}) {
                 <CloseButton className="position-absolute end-0 m-2" onClick={params.onClose} />
                 <Form.Group controlId='formFile' className='mb-3 d-flex flex-column'>
                     <Image className='rounded-circle mb-3 mx-auto' src={params.userInputs.pfp} alt="profile pic" width={"150px"} height={"150px"} style={{ objectFit: "cover" }} />
-                    <Form.Control onChange={params.onChangeUserInput} value={params.userInputs.pfp} placeholder="pfp" type="text" size="sm" />
+                    <Form.Control onChange={params.onChangePfp} type="file" size="sm" />
                 </Form.Group>
-                <Row style={{width: "100%"}}>
+                <Row className="w-100">
                     <Form.Group as={Col} xs={12} md={6}>
                         <Form.Control disabled type="text" value={params.userInputs.fname} className="text-center mb-2" placeholder={params.fname} size="sm" />
                     </Form.Group>
