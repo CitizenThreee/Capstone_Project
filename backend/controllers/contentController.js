@@ -8,7 +8,7 @@ const createContent = (req, res) => {
 }
 
 const getTabContent = (req, res) => {
-    Models.Content.find({ tabId: req.params.tabId })
+    Models.Content.find({ parentId: req.params.parentId, status: 'approved' })
         .then(data => res.send({ result: 200, data: data }))
         .catch(err => {
             console.log(err);
@@ -45,7 +45,7 @@ const updateContent = (req, res) => {
 
 const deleteContent = (req, res) => {
     Models.Content.findByIdAndDelete(req.params.contentId)
-        .then(() => res.send({ result: 200, data: "Tab data successfully deleted" }))
+        .then(() => res.send({ result: 200, data: "Content data successfully deleted" }))
         .catch(err => {
             console.log(err);
             res.send({ result: 500, error: err.message })

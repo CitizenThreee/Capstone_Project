@@ -6,7 +6,7 @@ router.post('/', (req, res) => {
     Controllers.tabController.createTab(req, res);
 })
 
-router.get('/tabs/:groupId', (req, res) => {
+router.get('/group/:groupId', (req, res) => {
     Controllers.tabController.getTabs(req, res);
 })
 

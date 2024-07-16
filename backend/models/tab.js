@@ -8,13 +8,10 @@ const contentSchema = new Schema({
     fpost: { type: [String], default: [] },
     rpost: { type: [String], default: [] },
     isContainer: { type: Boolean, default: false },
-    cType: { type: String, default: "Page" },
-    authorId: { type: Schema.Types.ObjectId, ref: 'user' },
-    tTitle: { type: String },
-    subTitle: { type: String },
-    img: { type: String },
-    bTitle: { type: String },
-    description: { type: String }
+    cType: { type: String },
+    subTitle: { type: Boolean },
+    img: { type: Boolean },
+    description: { type: Boolean }
 })
 
 //The tab data structure. An id is auto generated each time a tab is created.
@@ -23,9 +20,9 @@ const tabSchema = new Schema({
     name: { type: String, trim: true, required: true },
     type: { type: String, required: true },
     view: { type: [String], default: [] },
-    fpost: { type: [String], default: ['member'] },
+    fpost: { type: [String], default: [] },
     rpost: { type: [String], default: []},
-    contentSchema: { type: [contentSchema], default: [{ type: 'None' }] },
+    contentSchema: { type: [contentSchema], default: [{ type: 'none' }] },
     position: { type: Number, required: true, unique: true },
     created_at: { type: Date, default: Date.now }
 });

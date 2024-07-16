@@ -4,8 +4,15 @@ const Models = require('../models');
 
 const signin = (req, res) => {
     Models.User.findOne({ email: req.body.email.toLowerCase(), password: req.body.password }, { password: 0 })
-        .then(data => res.send({ result: 200, data: data }))
-        .catch(err => res.send({ result: 500, error: err.message }))
+        .then(data => {
+            if(data) {
+                res.send({ result: 200, data: data })
+            }
+            else{
+                return res.status(404).json({error: "No user found"})
+            }
+        })
+        .catch(err => res.status(500).json({ result: 500, error: err.message }))
 }
 
 const createUser = (req, res) => {
@@ -13,27 +20,22 @@ const createUser = (req, res) => {
     if(validation.passed){
         const newUser = {...req.body, email: req.body.email.toLowerCase()}
         Models.User(newUser).save()
-            .then(data => res.send({ result: 200, data: data }))
-            .catch(err => res.send({ result: 500, error: err.message }))
+            .then(data =>  res.send({ result: 200, data: data}))
+            .catch(err => res.status(500).json({ result: 500, error: err.message }))
     }
 }
 
 const getGroupUsers = (req, res) => {
     Models.User.find({ groupId: req.query.groupId, userId: req.query.userId })
         .then(data => res.send({ result: 200, data: data }))
-        .catch(err => {
-            console.log(err);
-            res.send({ result: 500, error: err.message })
-        })
+        .catch(err => 
+            res.status(500).json({ result: 500, error: err.message }) )
 }
 
 const getUser = (req, res) => {
     Models.User.findById(req.params.userId, { password: 0 })
         .then(data => res.send({ result: 200, data: data }))
-        .catch(err => {
-            console.log(err);
-            res.send({ result: 500, error: err.message })
-        })
+        .catch(err => res.status(500).json({ result: 500, error: err.message }))
 }
 
 const updateUser = (req, res) => {
@@ -42,16 +44,13 @@ const updateUser = (req, res) => {
             const { password, ...newData } = data;
             res.send({ result: 200, data: newData })
         })
-        .catch(err => res.send({ result: 500, error: err.message }))
+        .catch(err => res.status(500).json({ result: 500, error: err.message }))
 }
 
 const deleteUser = (req, res) => {
     Models.User.findByIdAndDelete(req.params.userId)
         .then(() => res.send({ result: 200, data: "User data successfully deleted" }))
-        .catch(err => {
-            console.log(err);
-            res.send({ result: 500, error: err.message })
-        })
+        .catch(err => res.status(500).json({ result: 500, error: err.message }))
 }
 
 module.exports = { signin, createUser, getGroupUsers, getUser, deleteUser, updateUser }

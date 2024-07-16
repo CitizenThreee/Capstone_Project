@@ -6,11 +6,11 @@ router.post('/', (req, res) => {
     Controllers.contentController.createContent(req, res);
 })
 
-router.get('/tab/:tabId', (req, res) => {
+router.get('/tab/:parentId', (req, res) => {
     Controllers.contentController.getTabContent(req, res);
 })
 
-router.get('/requests/:groupId', (req, res) => {
+router.get('/pending/:groupId', (req, res) => {
     Controllers.contentController.getGroupRequests(req, res);
 })
 

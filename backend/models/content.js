@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 //The content data structure. An id is auto generated each time a content is created.
 const contentSchema = new Schema({
     authorId: { type: Schema.Types.ObjectId, required: true, ref: 'user' },
-    tabId: { type: Schema.Types.ObjectId, required: true, ref: 'tab' },
+    parentId: { type: Schema.Types.ObjectId, required: true },
     groupId: { type: Schema.Types.ObjectId, required: true, ref: 'group' },
     type: { type: String, required: true },
-    title: { type: String, required: true },
-    subTitle: { type: String },
+    title: { type: String },
+    subtitle: { type: String },
     image: { type: String },
     level: { type: String },
     size: { type: String },

@@ -10,8 +10,15 @@ router.get('/user', (req, res) => {
     Controllers.userGroupController.getUserGroup(req, res);
 })
 
-router.get('/users', (req, res) => {
+router.get('/users/:groupId', (req, res) => {
     Controllers.userGroupController.getGroupUsers(req, res);
+})
+router.get('/users/pending/:groupId', (req, res) => {
+    Controllers.userGroupController.getPendingGroupUsers(req, res);
+})
+
+router.get('/groupsIds', (req, res) => {
+    Controllers.userGroupController.getUserGroupsIds(req, res);
 })
 
 router.get('/groups', (req, res) => {

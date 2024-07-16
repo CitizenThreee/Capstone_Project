@@ -10,6 +10,10 @@ router.get('/children/:groupId', (req, res) => {
     Controllers.groupController.getChildren(req, res);
 })
 
+router.get('/', (req, res) => {
+    Controllers.groupController.getGroups(req, res);
+})
+
 router.get('/:groupId', (req, res) => {
     Controllers.groupController.getGroup(req, res);
 })

@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const userGroupSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, required: true, ref: 'user' },
     groupId: { type: Schema.Types.ObjectId, required: true, ref: 'group' },
-    roles: { type: [String] },
+    roles: { type: [String], default: [] },
     showAbout: { type: Boolean, default: true },
     showPhone: { type: Boolean, default: true },
     showEmail: { type: Boolean, default: true },

@@ -16,6 +16,12 @@ const getGroup = (req, res) => {
         })
 }
 
+const getGroups = (req, res) => {
+    Models.Group.find()
+        .then(data => res.send({ result: 200, data: data}))
+        .catch(err => res.send({ result: 500, error: err.message }))
+}
+
 const getChildren = (req, res) => {
     Models.Group.find({ parentId: req.params.groupId })
         .then(data => res.send({ result: 200, data: data }))
@@ -41,4 +47,4 @@ const deleteGroup = (req, res) => {
     
 }
 
-module.exports = { createGroup, getGroup, updateGroup, deleteGroup, getChildren }
+module.exports = { createGroup, getGroup, updateGroup, deleteGroup, getChildren, getGroups }
