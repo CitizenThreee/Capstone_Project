@@ -1,23 +1,23 @@
 import LocalSquareLogo from "../elements/LocalSquareLogo"
 import Navbar from "react-bootstrap/Navbar"
-import Nav from "react-bootstrap/Nav"
-import Container from "react-bootstrap/Container"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import UserProfileImage from "../elements/UserProfileImage";
 import { useState, useEffect } from "react";
 import { MdGroups } from "react-icons/md";
-import { HiRectangleGroup } from "react-icons/hi2";
 import { IoMdSettings } from "react-icons/io";
 import { VscRequestChanges } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 import { useCurrentGroupContext } from "../../context/CurrentGroupProvider";
-import { GiFamilyTree } from "react-icons/gi";
+import { useCurrentTabContext } from "../../context/CurrentTabProvider";
+import { useUserContext } from "../../context/UserProvider";
 
-export default function NavBar({create=true, profile=true, showSearch=false, title="LocalSquare", onSearch, onCreate, setShowFilter, search, group}) {
+export default function NavBar({create=true, profile=true, showSearch=false, title="LocalSquare", onSearch, onCreate, onFocus, search, group}) {
     const navigate = useNavigate();
+    const { currentTab } = useCurrentTabContext();
+    const { user } = useUserContext();
     const { currentGroup } = useCurrentGroupContext();
-    const [width, setWidth] = useState(window.innerWidth);
+    const [ width, setWidth ] = useState(window.innerWidth);
 
     //Change width state variable when screen in resized
     useEffect(() => {
@@ -39,7 +39,7 @@ export default function NavBar({create=true, profile=true, showSearch=false, tit
                                 type="text"
                                 value={search}
                                 onChange={(e) => {onSearch(e.target.value)}}
-                                onFocus={() => setShowFilter(true)}
+                                onFocus={onFocus}
                                 placeholder="Search"
                                 className=" mr-sm-2"
                                 style={{width: "30vw"}}
@@ -47,14 +47,14 @@ export default function NavBar({create=true, profile=true, showSearch=false, tit
                         </Form>
                     }
                 </Navbar.Collapse>
-                {group && <Button className="me-3 p-1 border-0" variant="outline-primary" onClick={() => navigate(`/${currentGroup.id}/settings`)}>
+                {(group && user.groupProfile.roles.includes("owner")) && <Button className="me-3 p-1 border-0" variant="outline-primary" onClick={() => navigate(`/${currentGroup._id}/settings`)}>
                     <IoMdSettings size={30}/></Button> }
-                {group && <Button className="me-3 p-1 border-0" variant="outline-primary" onClick={() => navigate(`/${currentGroup.id}/requests`)}>
+                {(group && user.groupProfile.roles.includes("owner" || "admin")) && <Button className="me-3 p-1 border-0" variant="outline-primary" onClick={() => navigate(`/${currentGroup._id}/requests`)}>
                     <VscRequestChanges size={30}/></Button> }
-                {group && <Button className="me-3 p-1 border-0" variant="outline-primary" onClick={() => navigate(`/${currentGroup.id}/users`)}>
+                {group && <Button className="me-3 p-1 border-0" variant="outline-primary" onClick={() => navigate(`/${currentGroup._id}/users`)}>
                     <MdGroups size={30}/></Button> }
-                {group && <Button className="me-3 p-1 border-0" variant="outline-primary" onClick={() => navigate(`/${currentGroup.id}/relations`)}>
-                    <GiFamilyTree size={30}/></Button> }
+                {/*{group && <Button className="me-3 p-1 border-0" variant="outline-primary" onClick={() => navigate(`/${currentGroup.id}/relations`)}>
+                    <GiFamilyTree size={30}/></Button> }*/}
                 {create && <Button variant="outline-primary" className="me-3" onClick={onCreate}>Create +</Button>}
                 {profile && <UserProfileImage></UserProfileImage>}
             </Navbar>

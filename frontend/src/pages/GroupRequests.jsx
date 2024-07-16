@@ -8,57 +8,87 @@ import NavBar from "../components/navigation/NavBar";
 import TabBar from "../components/navigation/TabBar";
 import { useCurrentGroupContext } from "../context/CurrentGroupProvider";
 import UserCard from "../components/cards/UserCard";
-import { Button, ButtonGroup } from "react-bootstrap";
-import { useState } from "react";
-
-const mockRequests = [
-    {
-        id: "0",
-        reqType: "content",
-        type: "Post",
-        tTitle: "This is a post",
-        description: "this is the post's description"
-    },
-    {
-        id: "1",
-        reqType: "join",
-        fname: "Eliot",
-        lname: "Jobs",
-        pfp: "",
-        occupation: "Architect",
-        email: "ejobs@hotmail.co.nz",
-        phone: "0238573832",
-        about: "This is me, Eliot Jobs."
-    }
-]
+import { Button, ButtonGroup, CloseButton } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import Content from "../components/content/Content";
 
 export default function GroupRequests() {
-    const { currentGroup } = useCurrentGroupContext();
-    const [ requests, setRequests ] = useState(mockRequests)
+    const navigate = useNavigate();
+    const { currentGroup, handleSetCurrentGroup } = useCurrentGroupContext();
+    const [ requests, setRequests ] = useState([])
 
     const onAccept = (req) => {
-        setRequests(requests.filter(item => req.id != item.id))
-        //Update content status with "approved"
+        if(req.userId){
+            axios.put(`http://localhost:8080/userGroups/${req._id}`, {
+                status: 'approved',
+                roles: ['member']
+            })
+            .then(res => {
+                setRequests(requests.filter(item => req._id != item._id));
+                handleSetCurrentGroup({...currentGroup, users: [...currentGroup.users, res.data.data]});
+            })
+            .catch(err => console.log(err))
+        }
+        else{
+            axios.put(`http://localhost:8080/content/${req._id}`, {
+                status: 'approved'
+            })
+            .then(res => {
+                setRequests(requests.filter(item => req._id != item._id));
+            })
+            .catch(err => console.log(err))
+        }
     }
 
     const onReject = (req) => {
-        setRequests(requests.filter(item => req.id != item.id))
-        //Remove content from database
+        if(req.userId){
+            axios.delete(`http://localhost:8080/userGroups/${req._id}`)
+                .then(res => {
+                    setRequests(requests.filter(item => req._id != item._id))
+                })
+                .catch(err => console.log(err))
+        }
+        else{
+            axios.delete(`http://localhost:8080/content/${req._id}`)
+                .then(res => {
+                    setRequests(requests.filter(item => req._id != item._id))
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
+    const onUserData = (data) => {
+        axios.get(`http://localhost:8080/content/pending/${currentGroup._id}`)
+            .then(res => {
+                setRequests([...data, ...res.data.data]);
+            })
+            .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/userGroups/users/pending/${currentGroup._id}`)
+            .then(res => {
+                onUserData(res.data.data);
+            })
+            .catch(err => console.log(err))
+    }, [])
+
+    const onClose = () => {
+        navigate(`/${currentGroup._id}`);
     }
 
     return(
         <>
             <NavBar create={false} title={currentGroup.name} group={true}></NavBar>
-            <TabBar></TabBar>
-            <DefaultPageContainer offset="100">
+            <DefaultPageContainer offset="60">
                 <InnerPageContainer>
+                    <CloseButton className="ms-auto me-3 mb-3" onClick={onClose}></CloseButton>
                     {requests.map((req, item) => (
                         <div key={item} className="mb-3">
-                            {(req.reqType == "content" && req.type == "Post") && <Post data={req}></Post>}
-                            {(req.reqType == "content" && req.type == "Message") && <Message data={req}></Message>}
-                            {(req.reqType == "content" && req.type == "Alert") && <AlertPost data={req}></AlertPost>}
-                            {(req.reqType == "content" && req.type == "Comment") && <Comment data={req}></Comment>}
-                            {req.reqType == "join" && <UserCard user={req}></UserCard>}
+                            {req.title && <Content data={req} binBtn={false}></Content>}
+                            {req.userId  && <UserCard user={req}></UserCard>}
                             <ButtonGroup>
                                 <Button variant="outline-danger" onClick={() => onReject(req)}>reject</Button>
                                 <Button variant="outline-success" onClick={() => onAccept(req)}>accept</Button>

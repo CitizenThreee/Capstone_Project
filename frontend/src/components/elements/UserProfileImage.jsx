@@ -8,7 +8,7 @@ export default function UserProfileImage({w=45, h=45}) {
     return(
         <>
             <button className="rounded-circle border-0" onClick={() => navigate('/user')} style={{backgroundColor: "#aaa", padding: "2px"}}>
-                <img src={user.pfp ? user.pfp : "/avatar_placeholder.jpg"} alt="LocalSquare Logo" width={w} height={h} className="rounded-circle"/>
+                <img src={user.pfp ? user.pfp : "/avatar_placeholder.jpg"} width={w} height={h} className="rounded-circle"/>
             </button>
         </>
     )

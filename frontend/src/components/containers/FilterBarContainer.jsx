@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { CloseButton, Form } from "react-bootstrap"
 
-export default function FilterBarContainer({ setShowFilter }) {
+export default function FilterBarContainer({ onClose, onChangeFilters }) {
     const [ members, setMembers ] = useState(0);
     const [ distance, setDistance ] = useState(0);
     const [ type, setType ] = useState(0);
@@ -10,7 +10,7 @@ export default function FilterBarContainer({ setShowFilter }) {
     return(
         <>
             <div className="d-flex flex-column" style={{ position: "sticky", top: -5, zIndex: 2}}>
-                <div className="rounded-3 mx-auto mt-2 d-flex align-items-center justify-content-between px-3 border border-dark" style={{height: "40px", width: "100%", maxWidth: "1000px", backgroundColor: "#f5f5f5dd"}}>
+                <div className="rounded-3 mx-auto mt-2 d-flex align-items-center justify-content-between px-3 border border-dark w-100" style={{height: "40px", maxWidth: "1000px", backgroundColor: "#f5f5f5dd"}}>
                     <Form className="d-flex justify-content-evenly" style={{width: "90%"}}>
                         <Form.Group className="d-flex align-items-center" controlId="filterDistance" >
                             <Form.Label column className="me-2">Distance</Form.Label>
@@ -72,7 +72,7 @@ export default function FilterBarContainer({ setShowFilter }) {
                     </Form>
                     
                         
-                    <CloseButton className="float-end" onClick={() => setShowFilter(false)}/> 
+                    <CloseButton className="float-end" onClick={onClose}/> 
                 </div>
             </div>
         </>

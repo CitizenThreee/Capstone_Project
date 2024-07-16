@@ -1,18 +1,21 @@
 import './App.css'
 import AppRoutes from './AppRoutes'
 import { UserProvider } from './context/UserProvider'
-import { UserGroupsProvider } from './context/UserGroupsProvider'
 import { CurrentGroupProvider } from './context/CurrentGroupProvider'
+import { GroupsProvider } from './context/GroupsProvider'
+import { CurrentTabProvider } from './context/CurrentTabProvider'
 
 function App() {
   return (
     <>
       <UserProvider>
-        <UserGroupsProvider>
+        <GroupsProvider>
           <CurrentGroupProvider>
-            <AppRoutes></AppRoutes>
+            <CurrentTabProvider>
+              <AppRoutes></AppRoutes>
+            </CurrentTabProvider>
           </CurrentGroupProvider>
-        </UserGroupsProvider>
+        </GroupsProvider>
       </UserProvider>
     </>
   )

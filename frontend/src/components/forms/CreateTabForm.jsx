@@ -1,145 +1,103 @@
-import { useState } from "react";
-import { Button, ButtonGroup, CloseButton, Dropdown, Form, FormLabel } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, ButtonGroup, CloseButton, Dropdown, Form, FormGroup, FormLabel } from "react-bootstrap";
 import ContentFormElement from "./ContentFormElement";
+import { useCurrentGroupContext } from "../../context/CurrentGroupProvider";
+import ContentFormDropdown from "../elements/ContentFormDropdown";
 
 const defaultContent = {
-    type: "Post",
+    type: "page",
     view: [],
     fpost: [],
     rpost: [],
     isContainer: false,
-    cType: "Page",
-    topTitle: true,
+    cType: "page",
     image: false,
-    bottomTitle: false,
+    subTitle: false,
     description: false
 }
 
-export default function CreateTabForm({ onCreate, onCancel, roles }) {
-    const [ name, setName ] = useState("");
-    const [ vSelectedRoles, setVSelectedRoles ] = useState([]);
-    const [ fpSelectedRoles, setFpSelectedRoles ] = useState([]);
-    const [ rpSelectedRoles, setRpSelectedRoles ] = useState([]);
-    const [ selectedType, setSelectedType ] = useState("Page");
-    const [ content, setContent ] = useState([defaultContent])
+export default function CreateTabForm({ onCreate, onCancel }) {
+    const { currentGroup } = useCurrentGroupContext();
+    const [ input, setInput ] = useState({
+        groupId: currentGroup._id,
+        name: "",
+        type: "page",
+        view: [],
+        fpost: [],
+        rpost: [],
+        contentSchema: [{...defaultContent}],
+        position: currentGroup.tabs.length > 1 ? currentGroup.tabs[currentGroup.tabs.length-1].position + 1 : 0
+    });
 
-    function ToggleVSelectedRoles(e, option) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        if(vSelectedRoles.includes(option)){
-            setVSelectedRoles(vSelectedRoles.filter(role => role != option))
-        }
-        else { setVSelectedRoles([...vSelectedRoles, option]); }
+    const onSetInput = (input) => {
+        setInput(input);
     }
 
-    function ToggleFpSelectedRoles(e, option) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        if(fpSelectedRoles.includes(option)){
-            setFpSelectedRoles(fpSelectedRoles.filter(role => role != option))
-        }
-        else { setFpSelectedRoles([...fpSelectedRoles, option]); }
+    const onChangeInput = (name, value) => {
+        setInput({
+            ...input,
+            [name]: value
+        })
     }
 
-    function ToggleRpSelectedRoles(e, option) {
-        e.preventDefault();
+    const onToggleDropdown = (e, name, option) => {
         e.stopPropagation();
 
-        if(rpSelectedRoles.includes(option)){
-            setRpSelectedRoles(rpSelectedRoles.filter(role => role != option))
+        if(input[name].includes(option)){
+            onChangeInput(name, input[name].filter(role => role != option))
         }
-        else { setRpSelectedRoles([...rpSelectedRoles, option]); }
+        else { onChangeInput(name, [...input[name], option]); }
     }
 
     return(
         <>
-            <Form className="d-flex flex-column p-2" style={{ width: "100%" }}>
-                <Form.Group style={{width: "100%"}}>
-                    <Form.Control value={name} onChange={(e) => setName(e.target.value)} type="text" className="mb-3" placeholder="tab name" size="lg"  />
-                </Form.Group>
-                <Dropdown>
-                    <Dropdown.Toggle size="sm" variant="success" id="dropdown-basic">
-                        {`Type: ${selectedType}`}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item active={selectedType == "Page"} onClick={() => setSelectedType("Page")}> Page </Dropdown.Item>
-                        <Dropdown.Item active={selectedType == "Feed"} onClick={() => setSelectedType("Feed")}> Feed </Dropdown.Item>
-                        <Dropdown.Item active={selectedType == "Chat"} onClick={() => setSelectedType("Chat")}> Chat </Dropdown.Item>
-                        <Dropdown.Item active={selectedType == "Grid"} onClick={() => setSelectedType("Grid")}> Grid </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-
-                <FormLabel className="mx-auto fs-3 fw-semibold">Permissions</FormLabel>
-                <Form.Group className="d-flex justify-content-between">
-                    <FormLabel className="fw-semibold">Can View</FormLabel>
-                    <Dropdown className="mb-3">
-                        <Dropdown.Toggle size="sm" variant="success" id="dropdown-basic">
-                            {vSelectedRoles.length ? vSelectedRoles.map(item => item + " | ") : "all"}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu size="sm">
-                            {roles.map((option, index) => (
-                                <Dropdown.Item key={index} onClick={(e) => ToggleVSelectedRoles(e, option.name)} active={vSelectedRoles.includes(option.name)} >
-                                    {option.name}
-                                </Dropdown.Item>
-                            ))}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Form.Group>
-                
-                <Form.Group className="d-flex justify-content-between">
-                    <FormLabel className="fw-semibold">Can Post Freely</FormLabel>
-                    <Dropdown className="mb-3">
-                        <Dropdown.Toggle size="sm" variant="success" id="dropdown-basic">
-                            {fpSelectedRoles.length ? fpSelectedRoles.map(item => item + " | ") : "all"}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu size="sm">
-                            {roles.map((option, index) => (
-                                <Dropdown.Item disabled={rpSelectedRoles.includes(option.name)} key={index} onClick={(e) => ToggleFpSelectedRoles(e, option.name)} active={fpSelectedRoles.includes(option.name)} >
-                                    {option.name}
-                                </Dropdown.Item>
-                            ))}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Form.Group>
-                
-                <Form.Group className="d-flex justify-content-between">
-                    <FormLabel className="fw-semibold">Must Requested To Post</FormLabel>
-                    <Dropdown className="mb-3">
-                        <Dropdown.Toggle size="sm" variant="success" id="dropdown-basic">
-                            {rpSelectedRoles.length ? rpSelectedRoles.map(item => item + " | ") : "none"}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu size="sm">
-                            {roles.map((option, index) => (
-                                <Dropdown.Item disabled={fpSelectedRoles.includes(option.name)} key={index} onClick={(e) => ToggleRpSelectedRoles(e, option.name)} active={rpSelectedRoles.includes(option.name)} >
-                                    {option.name}
-                                </Dropdown.Item>
-                            ))}
-                        </Dropdown.Menu>
-                    </Dropdown>
+            <Form className="d-flex flex-column p-2 w-100">
+                <Form.Group className="w-100 mb-3">
+                    <Form.Control value={input.name} onChange={(e) => onChangeInput("name", e.target.value)} type="text" placeholder="tab name" size="lg"/>
                 </Form.Group>
 
+                <ContentFormDropdown title={"Type"} value={input.type}>
+                    <Dropdown.Item active={input.type == "page"} onClick={() => onChangeInput("type", "page")}> Page </Dropdown.Item>
+                    <Dropdown.Item active={input.type == "feed"} onClick={() => onChangeInput("type", "feed")}> Feed </Dropdown.Item>
+                    <Dropdown.Item active={input.type == "chat"} onClick={() => onChangeInput("type", "chat")}> Chat </Dropdown.Item>
+                    <Dropdown.Item active={input.type == "grid"} onClick={() => onChangeInput("type", "grid")}> Grid </Dropdown.Item>
+                </ContentFormDropdown>
                 
+                <FormLabel className="mx-auto fs-3 fw-semibold mb-3">Permissions</FormLabel>
+                <ContentFormDropdown title={"View"} value={input.view.length ? input.view.map(item => item + " | ") : "all"}>
+                    {currentGroup.roles.map((option, i) => (
+                        <Dropdown.Item key={i} onClick={(e) => onToggleDropdown(e, "view", option)} active={input.view.includes(option)} >
+                            {option}
+                        </Dropdown.Item>
+                    ))}
+                </ContentFormDropdown>
+
+                <ContentFormDropdown title={"Post Freely"} value={input.fpost.length ? input.fpost.map(item => item + " | ") : "all"}>
+                    {currentGroup.roles.map((option, i) => (
+                        <Dropdown.Item disabled={input.rpost.includes(option)} key={i} onClick={(e) => onToggleDropdown(e, "fpost", option)} active={input.fpost.includes(option)}>
+                            {option}
+                        </Dropdown.Item>
+                    ))}
+                </ContentFormDropdown>
                 
-                {(selectedType == "Feed" || selectedType == "Grid") && <div className="d-flex flex-column mb-3">
+                <ContentFormDropdown title={"Request To Post"} value={input.rpost.length ? input.rpost.map(item => item + " | ") : "none"}>
+                    {currentGroup.roles.map((option, i) => (
+                        <Dropdown.Item disabled={input.fpost.includes(option)} key={i} onClick={(e) => onToggleDropdown(e, "rpost", option)} active={input.rpost.includes(option)}>
+                            {option}
+                        </Dropdown.Item>
+                    ))}
+                </ContentFormDropdown>
+
+                {(input.type == "feed" || input.type == "grid") && <div className="d-flex flex-column mb-3">
                     <FormLabel className="mx-auto fs-3 fw-semibold">Content</FormLabel>
-                    {content.map((item, index) => (
-                        <ContentFormElement key={index} index={index} content={content} setContent={setContent} defaultContent={defaultContent} roles={roles}/>
+                    {input.contentSchema.map((item, i) => (
+                        <ContentFormElement key={i} i={i} input={input} onSetInput={onSetInput} defaultContent={defaultContent}/>
                     ))}
                 </div>}
                 
-                <ButtonGroup style={{width: "100%"}}>
+                <ButtonGroup className="w-100">
                     <Button variant="outline-danger" onClick={onCancel}>cancel</Button>
-                    <Button variant="outline-primary" onClick={() => {
-                        onCreate({
-                            name: name,
-                            view: vSelectedRoles,
-                            fPost: fpSelectedRoles,
-                            rPost: rpSelectedRoles,
-                            type: selectedType,
-                            content: content
-                        })}}>create</Button>
+                    <Button variant="outline-success" onClick={() => {onCreate({...input})}}>create</Button>
                 </ButtonGroup>
             </Form>
         </>

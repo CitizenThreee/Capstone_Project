@@ -1,6 +1,5 @@
 import { useState } from "react";
 import DefaultPageContainer from "../components/containers/DefaultPageContainer";
-import GroupSearchContainer from "../components/containers/GroupSearchContainer";
 import InnerPageContainer from "../components/containers/InnerPageContainer";
 import NavBar from "../components/navigation/NavBar";
 import { useCurrentGroupContext } from "../context/CurrentGroupProvider";
@@ -43,7 +42,7 @@ export default function GroupRelations() {
                             ))}
                         </Dropdown.Menu>
                     </Dropdown>
-                    {(selectedTypes.includes("Parents") || !selectedTypes.length) && 
+                    {/*{(selectedTypes.includes("Parents") || !selectedTypes.length) && 
                     <div>
                         <h2 className="mb-3">Parent Groups</h2>
                         {parentGroups.length ? <GroupSearchContainer data={parentGroups}></GroupSearchContainer> 
@@ -60,7 +59,7 @@ export default function GroupRelations() {
                         <h2 className="mb-3">Child Groups</h2>
                         {childGroups.length ? <GroupSearchContainer data={childGroups}></GroupSearchContainer> 
                         : <p className="text-center">No child groups found</p>}
-                    </div>}
+                    </div>}*/}
                 </InnerPageContainer>
             </DefaultPageContainer>
         </>

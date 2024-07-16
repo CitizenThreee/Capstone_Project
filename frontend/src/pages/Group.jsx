@@ -1,77 +1,45 @@
 import NavBar from "../components/navigation/NavBar";
-import { useNavigate, useParams } from "react-router-dom";
-import { useUserGroupsContext } from "../context/UserGroupsProvider";
 import TabBar from "../components/navigation/TabBar";
 import { useEffect, useState } from "react";
 import FeedTab from "../components/tabs/FeedTab";
-import GridTab from "../components/tabs/GridTab";
 import PageTab from "../components/tabs/PageTab";
 import SingleChatTab from "../components/tabs/SingleChatTab";
 import DefaultPageContainer from "../components/containers/DefaultPageContainer"
-
-const tabs = [
-    {
-        id: 1,
-        name: "home",
-        type: "page"
-    },
-    {
-        id: 2,
-        name: "alerts",
-        type: "feed"
-    },
-    {
-        id: 3,
-        name: "chat",
-        type: "chat"
-    },
-    {
-        id: 4,
-        name: "activities",
-        type: "grid"
-    }
-]
+import { useCurrentGroupContext } from "../context/CurrentGroupProvider";
+import axios from 'axios';
+import InnerPageContainer from "../components/containers/InnerPageContainer";
+import { useUserContext } from "../context/UserProvider";
+import { useCurrentTabContext } from "../context/CurrentTabProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function Group() {
-    const { groupId } = useParams();
     const navigate = useNavigate();
-    const { userGroups } = useUserGroupsContext();
-    const [ currentTab, setCurrentTab ] = useState(tabs[0])
-    const [ currentTabComponent, setCurrentTabComponent ] = useState()
+    const { currentGroup } = useCurrentGroupContext();
+    const { currentTab, handleSetCurrentTab } = useCurrentTabContext();
 
-    const changeTab = (id) => { setCurrentTab(tabs.find(tab => tab.id == id)) }
-
-    const onCreate = () => {
-        navigate("create");
+    const onChangeTab = (tab) => {
+        axios.get(`http://localhost:8080/content/tab/${tab._id}`)
+            .then(res => {
+                handleSetCurrentTab({tab: tab, content: res.data.data});
+                navigate(`/${currentGroup._id}`);
+            })
+            .catch(err => console.log(err))
     }
 
     useEffect(() => {
-        let tab;
-
-        switch(currentTab.type){
-            case "page":
-                tab = <PageTab tabId={currentTab.id}></PageTab>
-                break;
-            case "feed":
-                tab = <FeedTab tabId={currentTab.id}></FeedTab>
-                break;
-            case "chat":
-                tab = <SingleChatTab tabId={currentTab.id}></SingleChatTab>
-                break;
-            case "grid":
-                tab = <GridTab tabId={currentTab.id}></GridTab>
-                break;
-        }
-
-        setCurrentTabComponent(tab);
-    }, [currentTab])
+        !currentTab.name && onChangeTab(currentGroup.tabs.length ? currentGroup.tabs[0] : {})
+    }, [])
 
     return(
         <>
-            <NavBar title={userGroups.length && userGroups.find(group => group.id == groupId).name} create={false} group={true}></NavBar>
-            <TabBar tabs={tabs} setCurrentTab={changeTab} currentTab={currentTab} onCreate={onCreate}></TabBar>
+            <NavBar title={currentGroup.name} create={false} group={true}></NavBar>
+            <TabBar tabs={currentGroup.tabs} onChangeTab={onChangeTab} currentTab={currentTab} ></TabBar>
             <DefaultPageContainer offset="100">
-                {currentTabComponent}
+                <InnerPageContainer>
+                    {currentTab.tab.type == "page" && <PageTab level={0} />}
+                    {currentTab.tab.type == "feed" && <FeedTab level={0} />}
+                    {currentTab.tab.type == "chat" && <SingleChatTab level={0} />}
+                </InnerPageContainer>
             </DefaultPageContainer>
         </>
     )

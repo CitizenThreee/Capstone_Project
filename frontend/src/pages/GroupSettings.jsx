@@ -11,8 +11,7 @@ export default function GroupSettings() {
     return(
         <>
             <NavBar create={false} title={currentGroup.name} group={true}></NavBar>
-            <TabBar></TabBar>
-            <DefaultPageContainer offset="100">
+            <DefaultPageContainer offset="60">
                 <GroupSettingsContainer></GroupSettingsContainer>
             </DefaultPageContainer>
         </>

@@ -5,59 +5,55 @@ import DefaultPageContainer from "../components/containers/DefaultPageContainer"
 import ProfileSettingsForm from "../components/forms/ProfileSettingsForm";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export default function User() {
     const { user, handleSetUser } = useUserContext();
     const navigate = useNavigate();
+    const [ userInputs, setUserInputs] = useState({
+        pfp: user.pfp,
+        fname: user.fname,
+        lname: user.lname,
+        email: user.email,
+        phone: user.phone,
+        website: user.website,
+        occupation: user.occupation,
+        about: user.about,
+        location: user.location
+    });
 
-    const [ pfp, setPfp] = useState("");
-    const [ fname, setFname] = useState("");
-    const [ lname, setLname] = useState("");
-    const [ email, setEmail] = useState("");
-    const [ phone, setPhone] = useState("");
-    const [ website, setWebsite] = useState("");
-    const [ occupation, setOccupation] = useState("");
-    const [ about, setAbout] = useState("");
-    const [ location, setLocation] = useState("");
-
-    function SetDefaults() {
-        setPfp(user.pfp);
-        setFname(user.fname);
-        setLname(user.lname);
-        setEmail(user.email);
-        setPhone(user.phone);
-        setWebsite(user.website);
-        setOccupation(user.occupation);
-        setAbout(user.about);
-        setLocation(user.location);
+    const onChangeUserInput = (e) => {
+        setUserInputs({...userInputs, [e.target.name]: e.target.value})
     }
 
-    useEffect(() => {
-        SetDefaults();
-    }, [user])
-
-    const changePfp = (x) => { setPfp(x); }
-    const changeFname = (x) => { setFname(x); }
-    const changeLname = (x) => { setLname(x); }
-    const changeEmail = (x) => { setEmail(x); }
-    const changePhone = (x) => { setPhone(x); }
-    const changeWebsite = (x) => { setWebsite(x); }
-    const changeOccupation = (x) => { setOccupation(x); }
-    const changeAbout = (x) => { setAbout(x); }
-    const changeLocation = (x) => { setLocation(x); }
+    const onChangePfp = (e) => {
+        setUserInputs({...userInputs, pfp: URL.createObjectURL(e.target.files[0])})
+    }
 
     const onSave = () => {
-        handleSetUser({
-            pfp: pfp,
-            fname: user.fname,
-            lname: user.lname,
-            email: email,
-            phone: phone,
-            website: website,
-            occupation: occupation,
-            location: location,
-            about: about
-        });
+        axios.put(`http://localhost:8080/users/${user._id}`, {...userInputs})
+            .then(res => {
+                if(res.data.data){
+                    handleSetUser({
+                        ...user,
+                        pfp: userInputs.pfp,
+                        fname: user.fname,
+                        lname: user.lname,
+                        email: userInputs.email,
+                        phone: userInputs.phone,
+                        website: userInputs.website,
+                        occupation: userInputs.occupation,
+                        location: userInputs.location,
+                        about: userInputs.about
+                    });
+                    navigate(-1);
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
+    const onCancel = () => {
+        onClose();
     }
 
     const onClose = () => {
@@ -69,26 +65,11 @@ export default function User() {
         navigate("/signin")
     }
 
-    const profileParams = {
-        pfp: pfp,
-        setPfp: changePfp,
-        fname: fname,
-        setFname: changeFname,
-        lname: lname,
-        setLname: changeLname,
-        email: email,
-        setEmail: changeEmail,
-        phone: phone,
-        setPhone: changePhone,
-        website: website,
-        setWebsite: changeWebsite,
-        occupation: occupation,
-        setOccupation: changeOccupation,
-        about: about,
-        setAbout: changeAbout,
-        location: location,
-        setLocation: changeLocation,
-        onCancel: SetDefaults,
+    const params = {
+        userInputs: userInputs,
+        onChangeUserInput: onChangeUserInput,
+        onChangePfp: onChangePfp,
+        onCancel: onCancel,
         onSave: onSave,
         onSignOut: onSignOut,
         onClose: onClose
@@ -99,7 +80,7 @@ export default function User() {
             <NavBar title={`${user.fname} ${user.lname}`} create={false} profile={false}></NavBar>
             <DefaultPageContainer text="" link="">
                 <SettingsPageContainer>
-                    <ProfileSettingsForm {...profileParams}></ProfileSettingsForm>
+                    <ProfileSettingsForm params={params}></ProfileSettingsForm>
                 </SettingsPageContainer>
             </DefaultPageContainer>
         </>

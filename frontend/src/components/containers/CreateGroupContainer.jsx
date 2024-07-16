@@ -1,26 +1,42 @@
 import { useNavigate } from "react-router-dom";
 import CreateGroupForm from "../forms/CreateGroupForm";
-import DefaultPageContainer from "./DefaultPageContainer";
 import { useCurrentGroupContext } from "../../context/CurrentGroupProvider";
-import { useUserGroupsContext } from "../../context/UserGroupsProvider";
+import { useGroupsContext } from "../../context/GroupsProvider";
+import axios from 'axios';
+import { useUserContext } from "../../context/UserProvider";
 
 export default function CreateGroupContainer() {
     const navigate = useNavigate();
+    const { user } = useUserContext();
     const { handleSetCurrentGroup } = useCurrentGroupContext();
-    const { userGroups, handleSetUserGroups } = useUserGroupsContext();
+    const { groups, handleSetGroups } = useGroupsContext();
+
+    const onCreated = (newGroup) => {
+        axios.post('http://localhost:8080/userGroups', { userId: user._id, groupId: newGroup._id, status: 'approved', roles: ['owner'] })
+            .then(res => {
+                console.log(res);
+                handleSetGroups([...groups, newGroup]);
+                navigate(`/${newGroup._id}`);
+            })
+            .catch(err => console.log(err))
+    }
 
     const onCreate = (name) => {
         const newGroup = {
-            id: userGroups.length,
             name: name,
             description: "",
             location: "",
-            bannerImageURL: "",
+            banner: "",
+            roles: ['owner', 'admin', 'member']
         }
 
-        handleSetCurrentGroup({...newGroup, tabs: []})
-        handleSetUserGroups([...userGroups, newGroup])
-        navigate(`/${newGroup.id}`)
+        axios.post('http://localhost:8080/groups/create', {...newGroup})
+            .then(res => {
+                console.log(res);
+                handleSetCurrentGroup({...res.data.data, tabs: [], users: []});
+                onCreated(res.data.data);
+            })
+            .catch(err => console.log(err))
     }
 
     const onCancel = () => {
