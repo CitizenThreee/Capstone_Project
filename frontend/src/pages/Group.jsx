@@ -19,6 +19,7 @@ export default function Group() {
 
     // Function for changing the current tab. Gets data from the backend and populates the currentTab context
     const onChangeTab = (tab) => {
+        if(!tab._id) { handleSetCurrentTab({ tab: {}, content: [] }) }
         axios.get(`http://localhost:8080/content/tab/${tab._id}`)
             .then(res => {
                 handleSetCurrentTab({tab: tab, content: res.data.data});

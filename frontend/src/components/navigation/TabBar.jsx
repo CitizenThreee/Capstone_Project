@@ -7,21 +7,11 @@ import { useCurrentTabContext } from "../../context/CurrentTabProvider";
 import axios from 'axios';
 
 // The tab bar renders all the tabs in the current group, and handles changing and deleting those tabs
-export default function TabBar({ create=true }) {
+export default function TabBar({ create=true, onChangeTab }) {
     const navigate = useNavigate();
     const { user } = useUserContext();
     const { currentGroup, handleSetCurrentGroup } = useCurrentGroupContext();
-    const { currentTab, handleSetCurrentTab } = useCurrentTabContext();
-
-    // Called when a user switches tabs, gets the content data from the new tab and navigates to the new tab
-    const onChangeTab = (tab) => {
-        axios.get(`http://localhost:8080/content/tab/${tab._id}`)
-            .then(res => {
-                handleSetCurrentTab({ tab: tab, content: res.data.data });
-                navigate(`/${currentGroup._id}`);
-            })
-            .catch(err => console.log(err))
-    }
+    const { currentTab } = useCurrentTabContext();
 
     // Called when the user creates a new tab, navigates to the create page ( appends /create to the path )
     const onCreate = () => {
@@ -32,8 +22,9 @@ export default function TabBar({ create=true }) {
     const onDelete = (tabid) => {
         axios.delete(`http://localhost:8080/tabs/${tabid}`)
             .then(res => {
-                handleSetCurrentGroup({...currentGroup, tabs: currentGroup.tabs.filter(tab => tab._id != tabid)});
-                onChangeTab(currentGroup.tabs.length ? currentGroup.tabs[0] : {});
+                const newGroup = {...currentGroup, tabs: currentGroup.tabs.filter(tab => tab._id != tabid)};
+                handleSetCurrentGroup({...newGroup});
+                onChangeTab(newGroup.tabs.length ? newGroup.tabs[0] : {});
             })
             .catch(err => console.log(err))
     }

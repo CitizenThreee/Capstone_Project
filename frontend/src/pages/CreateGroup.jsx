@@ -11,7 +11,7 @@ import axios from 'axios';
 // Page for creating a new group
 export default function CreateGroup() {
     const navigate = useNavigate();
-    const { user } = useUserContext();
+    const { user, handleSetUser } = useUserContext();
     const { handleSetCurrentGroup } = useCurrentGroupContext();
     const { groups, handleSetGroups } = useGroupsContext();
 
@@ -19,6 +19,7 @@ export default function CreateGroup() {
     const onCreated = (newGroup) => {
         axios.post('http://localhost:8080/userGroups', { userId: user._id, groupId: newGroup._id, status: 'approved', roles: ['owner'] })
             .then(res => {
+                handleSetUser({...user, groupProfile: res.data.data });
                 handleSetGroups([...groups, newGroup]);
                 navigate(`/${newGroup._id}`);
             })
