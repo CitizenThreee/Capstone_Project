@@ -1,5 +1,6 @@
 import { Navigate, useNavigate } from "react-router-dom"
 
+// The LocalSquare element
 export default function LocalSquareLogo({w=45, h=45}) {
     const navigate = useNavigate();
 

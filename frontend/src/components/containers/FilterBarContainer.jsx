@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { CloseButton, Form } from "react-bootstrap"
 
+// Filter bar container for filtering groups !! NOT CURRENTLY IN USE !!
 export default function FilterBarContainer({ onClose, onChangeFilters }) {
     const [ members, setMembers ] = useState(0);
     const [ distance, setDistance ] = useState(0);
@@ -12,6 +13,8 @@ export default function FilterBarContainer({ onClose, onChangeFilters }) {
             <div className="d-flex flex-column" style={{ position: "sticky", top: -5, zIndex: 2}}>
                 <div className="rounded-3 mx-auto mt-2 d-flex align-items-center justify-content-between px-3 border border-dark w-100" style={{height: "40px", maxWidth: "1000px", backgroundColor: "#f5f5f5dd"}}>
                     <Form className="d-flex justify-content-evenly" style={{width: "90%"}}>
+                        
+                        {/* Distance filter */}
                         <Form.Group className="d-flex align-items-center" controlId="filterDistance" >
                             <Form.Label column className="me-2">Distance</Form.Label>
                             <Form.Select disabled size="sm" value={distance} onChange={(e) => setDistance(e.target.value)}>
@@ -23,20 +26,8 @@ export default function FilterBarContainer({ onClose, onChangeFilters }) {
                                     <option value="5">200km</option>
                             </Form.Select>
                         </Form.Group>
-                        
-                        {/*<Dropdown>
-                            <Dropdown.Toggle size="sm" variant="success" id="dropdown-basic">
-                                {members.map(item => item + " | ")}
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu size="sm">
-                                {membersCounts.map((option, index) => (
-                                    <Dropdown.Item key={index} onClick={(e) => ToggleMemberCounts(e, option)} active={ members.includes(option)} >
-                                        {option}
-                                    </Dropdown.Item>
-                                ))}
-                            </Dropdown.Menu>
-                        </Dropdown>*/}
 
+                        {/* Type of group filter */}
                         <Form.Group className="d-flex align-items-center" controlId="filterTypes" >
                             <Form.Label column className="me-2">Type</Form.Label>
                             <Form.Select disabled size="sm" value={type} onChange={(e) => setType(e.target.value)}>
@@ -46,9 +37,10 @@ export default function FilterBarContainer({ onClose, onChangeFilters }) {
                             </Form.Select>
                         </Form.Group>
 
+                        {/* Member count filter */}
                         <Form.Group className="d-flex align-items-center" controlId="filterMembers" >
                             <Form.Label column className="me-2">Members</Form.Label>
-                            <Form.Select size="sm" value={members} onChange={(e) => setMembers(e.target.value)}>
+                            <Form.Select disabled size="sm" value={members} onChange={(e) => setMembers(e.target.value)}>
                                     <option value="0">All</option>
                                     <option value="1">10+</option>
                                     <option value="2">50+</option>
@@ -58,6 +50,7 @@ export default function FilterBarContainer({ onClose, onChangeFilters }) {
                             </Form.Select>
                         </Form.Group>
 
+                        {/* Sorting filter */}
                         <Form.Group className="d-flex align-items-center" controlId="filterSort" >
                             <Form.Label column className="me-2">Sort</Form.Label>
                             <Form.Select size="sm" value={sort} onChange={(e) => setSort(e.target.value)}>
@@ -71,7 +64,6 @@ export default function FilterBarContainer({ onClose, onChangeFilters }) {
                         </Form.Group>
                     </Form>
                     
-                        
                     <CloseButton className="float-end" onClick={onClose}/> 
                 </div>
             </div>

@@ -2,6 +2,8 @@ import { createContext, useState, useContext } from "react";
 
 const groupsContext = createContext();
 
+// Context for all the group data. Holds the data for all groups fetched from the database.
+// Data Structure: { ...groups }
 export function GroupsProvider(props) {
     const [groups, setGroups] = useState([])
 

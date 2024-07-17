@@ -4,11 +4,14 @@ import { useCurrentGroupContext } from "../../context/CurrentGroupProvider";
 import axios from 'axios';
 import { useUserContext } from "../../context/UserProvider";
 
+// Card for user's groups
 export default function GroupThinDisplayCard({ data }) {
     const navigate = useNavigate();
     const { user, handleSetUser } = useUserContext();
     const { handleSetCurrentGroup } = useCurrentGroupContext();
 
+    // Once the user data has been retrieved, get the data of all the group's users and store it in the currentGroup context
+    // then navigate to the group page
     const onUserData = () => {
         axios.get(`http://localhost:8080/userGroups/users/${data._id}`)
             .then(res => {
@@ -21,6 +24,7 @@ export default function GroupThinDisplayCard({ data }) {
             .catch(err => console.log(err))
     }
 
+    // Once the tab data has been retrieved, update the user with the relevant userGroup data and call onUserData
     const onTabData = () => {
         axios.get('http://localhost:8080/userGroups/user', { params: { userId: user._id, groupId: data._id } })
             .then(res => {
@@ -30,6 +34,7 @@ export default function GroupThinDisplayCard({ data }) {
             .catch(err => console.log(err))
     }
 
+    // When user selects the group, update the currentGroup with the tab data, and call onTabData
     const onSelect = () => {
         axios.get(`http://localhost:8080/tabs/group/${data._id}`)
             .then(res => {

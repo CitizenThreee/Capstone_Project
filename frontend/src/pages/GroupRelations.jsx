@@ -6,12 +6,11 @@ import { useCurrentGroupContext } from "../context/CurrentGroupProvider";
 import { Dropdown } from "react-bootstrap";
 import TabBar from "../components/navigation/TabBar";
 
+// !!! NOT CURRENTLY USED !!!
+
 export default function GroupRelations() {
     const { currentGroup } = useCurrentGroupContext();
     const [ selectedTypes, setSelectedTypes ] = useState([]);
-    const [ parentGroups, setParentGroups ] = useState([]);
-    const [ siblingGroups, setSiblingGroups ] = useState([]);
-    const [ childGroups, setChildGroups ] = useState([]);
 
     const types = ["Parents","Siblings","Children"];
 

@@ -4,17 +4,19 @@ import { useUserContext } from '../../context/UserProvider';
 import { useState } from 'react';
 import axios from 'axios';
 
+// Container for sign in page
 export default function SignInContainer() {
     const { handleSetUser } = useUserContext();
-
     const navigate = useNavigate();
-
     const [ validation, setValidation ] = useState(true);
 
+    // Reset validation
     const onReset = () => {
         setValidation(true);
     }
 
+    // Handles when a user signs up. If user if found, set the user and navigate to the home page
+    // otherwise set the validation to false
     const onSignin = ({ email, password }) => {
         axios.post('http://localhost:8080/users/signin', {
             email: email,
@@ -32,6 +34,7 @@ export default function SignInContainer() {
         })
     }
 
+    // Props to pass to the sign in form
     const signinProps = {
         validation: validation,
         onReset: onReset,

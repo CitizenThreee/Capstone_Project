@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+// A generic default page container that places content and children in the right place
 export default function DefaultPageContainer({text="", link="", href="/signin", color="#eee", offset="60", children}) {
     return(
         <div className={`d-flex align-items-center flex-column overflow-hidden`} style={{ backgroundColor: color, height: ("calc(100vh - " + offset + "px)") }}>

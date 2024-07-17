@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Button, Card } from "react-bootstrap"
 
-
+// Expandable card for user details. Used in the group users page
 export default function UserCard({user}) {
     const [ expanded, setExpanded ] = useState();
 
@@ -16,6 +16,8 @@ export default function UserCard({user}) {
                     </div>
                 </Card.Header>
                 <div className="position-absolute hoverview h-100 w-100"></div>
+
+                {/* Additional details that are conditionally rendered based on the 'expanded' state variable */}
                 {expanded && <Card.Body className="py-1 px-2 d-flex flex-column w-100" style={{ maxHeight: "100%", overflow: "hidden" }}>
                     <Card.Text className="p-0 pt-2 lh-sm">{user.showPhone && `Phone: ${user.userId.phone}`}</Card.Text>
                     <Card.Text className="p-0 lh-sm">{user.showEmail && `Email: ${user.userId.email}`}</Card.Text>

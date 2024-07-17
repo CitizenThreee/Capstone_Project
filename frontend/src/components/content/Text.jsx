@@ -1,3 +1,4 @@
+// A basic text component that renders text based on the size passed in data
 export default function Text({data}) {
     return(
         <>

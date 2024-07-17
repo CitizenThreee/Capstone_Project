@@ -1,11 +1,8 @@
-import { useUserContext } from "../../context/UserProvider"
-
+// Generic settings container that renders any children elements within the container
 export default function SettingsPageContainer({children}) {
-    const { user } = useUserContext();
-
     return (
         <>
-            <div className="rounded p-2 d-flex flex-column align-items-center mt-3" style={{ backgroundColor: "#ddd", width: "90%", maxWidth: "500px" }}>
+            <div className="rounded p-2 d-flex flex-column align-items-center my-3 overflow-auto" style={{ backgroundColor: "#ddd", width: "90%", maxWidth: "500px", maxHeight: "100%"}}>
                 {children}
             </div>
         </>

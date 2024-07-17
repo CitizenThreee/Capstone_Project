@@ -1,5 +1,6 @@
 import { Dropdown, FormLabel } from "react-bootstrap";
 
+// A generic wrapper for dropdown form elements
 export default function ContentFormDropdown({title, value, children}) {
     return (
         <div className="d-flex justify-content-between mb-2">

@@ -1,5 +1,6 @@
 import { Form } from "react-bootstrap";
 
+// A generic wrapper for swtich form elements
 export default function ContentFormSwitch({name, title, onChange, value}) {
     return (
         <Form.Group className="d-flex justify-content-between mb-2">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, ButtonGroup, Form } from "react-bootstrap";
 
+// A basic form for creating a group, consisting of a name input field, and cancel and create buttons
 export default function CreateGroupForm({ onCreate, onCancel }) {
     const [ name, setName ] = useState();
 

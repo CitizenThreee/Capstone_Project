@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useCurrentGroupContext } from "../../context/CurrentGroupProvider"
 import { useUserContext } from "../../context/UserProvider";
 
+// A message component for chat rooms
 export default function Message({data, w="40px", h="40px"}) {
     const { currentGroup } = useCurrentGroupContext();
     const [ author, setAuthor ] = useState({});
     const { user } = useUserContext();
 
+    // Set the author of the content
     useEffect(() => {
         const authorList = currentGroup.users.filter(u => u.userId._id == data.authorId);
         setAuthor(authorList.length > 0 && {...authorList[0].userId});
