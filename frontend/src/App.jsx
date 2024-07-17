@@ -5,6 +5,7 @@ import { CurrentGroupProvider } from './context/CurrentGroupProvider'
 import { GroupsProvider } from './context/GroupsProvider'
 import { CurrentTabProvider } from './context/CurrentTabProvider'
 
+//Container for all the context providers and app routes
 function App() {
   return (
     <>

@@ -3,6 +3,7 @@ import DefaultPageContainer from "../components/containers/DefaultPageContainer"
 import { Col, Row } from "react-bootstrap"
 import SignInContainer from "../components/containers/SignInContainer"
 
+// Sign in page. User can swap to the sign up page if they don't have an account
 export default function SignIn() {
     return(
         <>

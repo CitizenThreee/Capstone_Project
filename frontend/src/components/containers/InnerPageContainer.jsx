@@ -1,5 +1,4 @@
-
-
+// Generic inner page container that holds and positions children
 export default function InnerPageContainer({children}) {
     return (
         <div className="d-flex flex-column align-items-center py-3 px-1 rounded-3 overflow-auto w-100 position-relative"

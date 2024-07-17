@@ -1,5 +1,6 @@
 import { Card } from "react-bootstrap";
 
+// A basic post component that uses bootstrap's card element
 export default function Post({ data={} }) {
     return (
         <>

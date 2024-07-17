@@ -3,10 +3,11 @@ import { useCurrentGroupContext } from "../../context/CurrentGroupProvider";
 import ContentFormSwitch from "../elements/ContentFormSwitch";
 import ContentFormDropdown from "../elements/ContentFormDropdown";
 
-
-export default function ContentFormElement({ i, input, onSetInput, onToggleContentCheck, defaultContent }) {
+// A form container for content elements within the create tab form
+export default function ContentFormElement({ i, input, onSetInput, defaultContent }) {
     const { currentGroup } = useCurrentGroupContext();
 
+    // When an input is changed, set the input state passed from the parent form
     const onChangeInput = (name, value) => {
         onSetInput({
             ...input,
@@ -15,6 +16,7 @@ export default function ContentFormElement({ i, input, onSetInput, onToggleConte
         })
     }
 
+    // When the isContainer switch is changed, either remove the child schemas, or create a new one then update the input
     const onChangeIsContainer = (name, value) => {
         let newSchema = [...input.contentSchema];
 
@@ -32,6 +34,7 @@ export default function ContentFormElement({ i, input, onSetInput, onToggleConte
         })
     }
 
+    // Toggle a dropdown item and set the input to reflec the change
     const onToggleDropdown = (e, name, option) => {
         e.stopPropagation();
 
@@ -50,14 +53,17 @@ export default function ContentFormElement({ i, input, onSetInput, onToggleConte
     //Otherwise return a dynamic form based on the user selections
     return (
         <Form.Group className="mb-3 p-2" style={{ backgroundColor: "#eee" }}>
+
+            {/* Set the content type */}
             <ContentFormDropdown title="Type" value={input.contentSchema[i].type}>
                 <Dropdown.Item active={input.contentSchema[i].type == "post"} onClick={() => onChangeInput("type", "post")}>Post</Dropdown.Item>
                 <Dropdown.Item active={input.contentSchema[i].type == "alert"} onClick={() => onChangeInput("type", "alert")}>Alert</Dropdown.Item>
-                <Dropdown.Item active={input.contentSchema[i].type == "comment"} onClick={() => onChangeInput("type", "comment")}>Comment</Dropdown.Item>
             </ContentFormDropdown>
 
+            {/* Toggle the content container status */}
             <ContentFormSwitch name="isContainer" title="Is Container" onChange={onChangeIsContainer} value={input.contentSchema[i].isContainer}/>
             
+            {/* Additional permission options rendered if the content is a container */}
             {input.contentSchema[i].isContainer && 
                 <>
                     <ContentFormDropdown title="Container Type" value={input.contentSchema[i].cType}>
@@ -93,13 +99,14 @@ export default function ContentFormElement({ i, input, onSetInput, onToggleConte
                 </>
             }
 
+            {/* Content inputs available based off the type of content */}
             {["post"].includes(input.contentSchema[i].type) && 
             <ContentFormSwitch name="image" title="Image" onChange={onChangeInput} value={input.contentSchema[i].image}/>}
 
-            {["post", "comment"].includes(input.contentSchema[i].type) && 
+            {["post" ].includes(input.contentSchema[i].type) && 
             <ContentFormSwitch name="subtitle" title="Subtitle" onChange={onChangeInput} value={input.contentSchema[i].subtitle}/>}
 
-            {["alert", "post", "comment"].includes(input.contentSchema[i].type) && 
+            {["alert", "post" ].includes(input.contentSchema[i].type) && 
             <ContentFormSwitch name="description" title="Description" onChange={onChangeInput} value={input.contentSchema[i].description}/>}
         </Form.Group>
         

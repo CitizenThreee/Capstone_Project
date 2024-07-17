@@ -1,3 +1,4 @@
+// A basic image component
 export default function Image({data}) {
     return(
         <>

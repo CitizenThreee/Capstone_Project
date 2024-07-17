@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../context/UserProvider';
 import axios from 'axios';
 
+// Container for the sign up page
 export default function SignUpContainer() {
     const { handleSetUser } = useUserContext();
     const navigate = useNavigate();
@@ -37,19 +38,22 @@ export default function SignUpContainer() {
         cPassword: ""
     })
 
+    // Change a validation value
     const onChangeValidation = ({name, value}) => {
         setValidation(prev => ({ ...prev, [name]: value }))
     }
 
+    // Change a user input
     const onChangeUserInput = (e) => {
         setUserInput(prev => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
+    // Change the user pfp
     const onChangePfp = (e) => {
         setUserInput(prev => ({ ...prev, pfp: URL.createObjectURL(e.target.files[0]) }))
     }
 
-    //This will be moved to the backend
+    // Check the user inputs and set validation. Change the stage if the validation passes
     function ValidateBasic(destination) {
         let passed = true;
 
@@ -69,7 +73,8 @@ export default function SignUpContainer() {
         setStage(passed ? destination : "basic");
     }
 
-    //This will be moved to the backend
+    // Validate the user's inputed password (check if the two passwords match) and if
+    // passed, update the database with the new user
     function ValidatePassword() {
         let passed = true;
 

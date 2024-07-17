@@ -8,16 +8,18 @@ import DefaultPageContainer from "../components/containers/DefaultPageContainer"
 import { useCurrentGroupContext } from "../context/CurrentGroupProvider";
 import axios from 'axios';
 import InnerPageContainer from "../components/containers/InnerPageContainer";
-import { useUserContext } from "../context/UserProvider";
 import { useCurrentTabContext } from "../context/CurrentTabProvider";
 import { useNavigate } from "react-router-dom";
 
+// The group page container. It holds the navbar and tab container based on the current tab selected
 export default function Group() {
     const navigate = useNavigate();
     const { currentGroup } = useCurrentGroupContext();
     const { currentTab, handleSetCurrentTab } = useCurrentTabContext();
 
+    // Function for changing the current tab. Gets data from the backend and populates the currentTab context
     const onChangeTab = (tab) => {
+        if(!tab._id) { handleSetCurrentTab({ tab: {}, content: [] }) }
         axios.get(`http://localhost:8080/content/tab/${tab._id}`)
             .then(res => {
                 handleSetCurrentTab({tab: tab, content: res.data.data});
@@ -26,6 +28,7 @@ export default function Group() {
             .catch(err => console.log(err))
     }
 
+    // Set the tab on first load to the first tab in the group tab list if it exists
     useEffect(() => {
         !currentTab.name && onChangeTab(currentGroup.tabs.length ? currentGroup.tabs[0] : {})
     }, [])

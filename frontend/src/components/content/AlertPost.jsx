@@ -1,5 +1,6 @@
 import Alert from 'react-bootstrap/Alert';
 
+// Element for alerts with conditional title and description
 export default function AlertPost({ data }) {
     return(
         <>
