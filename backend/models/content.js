@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-//The content data structure. An id is auto generated each time a content is created.
+//The content data structure. An id is auto generated each time a content is created
 const contentSchema = new Schema({
     authorId: { type: Schema.Types.ObjectId, required: true, ref: 'user' },
     parentId: { type: Schema.Types.ObjectId, required: true },

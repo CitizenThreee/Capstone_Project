@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-//The user data structure. An id is auto generated each time a user is created.
+//The user data structure. An id is auto generated each time a user is created
 const userSchema = new Schema({
     fname: { type: String, trim: true, required: true },
     lname: { type: String, trim: true, required: true },

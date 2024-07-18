@@ -1,3 +1,4 @@
+// Exports all the controllers
 module.exports = {
     userController: require('./userController'),
     groupController: require('./groupController'),

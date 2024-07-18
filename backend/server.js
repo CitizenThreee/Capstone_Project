@@ -26,6 +26,8 @@ app.use('/userGroups', userGroupRoutes);
 app.use('/tabs', tabRoutes);
 app.use('/content', contentRoutes);
 
+
+// Create a socket connection for chat tabs
 io.on('connection', (socket) => {
     console.log('User connected')
 

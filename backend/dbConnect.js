@@ -3,7 +3,7 @@ const Mongoose = require('mongoose');
 
 const uri = process.env.DB_URI || "mongodb://localhost:27017/localSquare";
 
-// Connect to MongoDB
+// Connect to MongoDB 
 Mongoose.connect(uri)
     .then(() => console.log('MongoDB Connected'))
     .catch(error => console.log('MongoDB Error: '+error.message));
