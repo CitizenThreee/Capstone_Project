@@ -47,7 +47,7 @@ const getContent = (req, res) => {
 const updateContent = (req, res) => {
     Models.Content.findByIdAndUpdate(req.params.contentId, req.body, { new: true }).lean()
         .then(data => {
-            if(newData) http.OK(res, data);
+            if(data) http.OK(res, data);
             else http.BadRequest(res, 'No data found');
         })
         .catch(err => http.ServerError(res, err))
