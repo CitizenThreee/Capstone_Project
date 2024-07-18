@@ -4,12 +4,15 @@
   "description": "",
   "main": "EndpointTests.js",
   "scripts": {
-    "test": "npm UnitTests.js",
-    "test endpoints": "npm EndpointTests.js"
+    "test": "mocha",
+    "test-endpoints": "node EndpointTests.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.2"
+    "axios": "^1.7.2",
+    "chai": "^5.1.1",
+    "mocha": "^10.6.0",
+    "supertest": "^7.0.0"
   }
 }
