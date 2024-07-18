@@ -27,7 +27,7 @@ class Validation {
 
         // Test all the required inputs to make sure they are all valid
         try{
-            if(IsValidEmail(input.email)){ response.passed = false; response.email = 'Email is not a valid email'; }
+            if(!IsValidEmail(input.email)){ response.passed = false; response.email = 'Email is not a valid email'; }
 
             if(input.email != input.cEmail || !input.email){ response.passed = false; response.cEmail = 'Email confirmation does not match'; }
 
