@@ -14,7 +14,7 @@ const contentSchema = new Schema({
     description: { type: Boolean }
 })
 
-//The tab data structure. An id is auto generated each time a tab is created.
+//The tab data structure. An id is auto generated each time a tab is created
 const tabSchema = new Schema({
     groupId: { type: Schema.Types.ObjectId, required: true, ref: 'group' },
     name: { type: String, trim: true, required: true },
