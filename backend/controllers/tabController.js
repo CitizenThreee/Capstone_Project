@@ -46,7 +46,7 @@ const updateTab = (req, res) => {
 // Deletes a specific tab
 const deleteTab = (req, res) => {
     Models.Tab.findByIdAndDelete(req.params.tabId)
-        .then(() => {
+        .then(data => {
             if(data) http.OK(res, data);
             else http.BadRequest(res, 'Error when deleting');
         })
