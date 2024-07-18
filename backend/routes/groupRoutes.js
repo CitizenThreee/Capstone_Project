@@ -2,6 +2,7 @@ let express = require("express");
 let router = express.Router();
 let Controllers = require("../controllers");
 
+// Routes for groups
 router.post('/create', (req, res) => {
     Controllers.groupController.createGroup(req, res);
 })

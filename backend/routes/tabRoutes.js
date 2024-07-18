@@ -2,6 +2,7 @@ let express = require("express");
 let router = express.Router();
 let Controllers = require("../controllers");
 
+// Routes for tabs
 router.post('/', (req, res) => {
     Controllers.tabController.createTab(req, res);
 })

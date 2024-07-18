@@ -2,6 +2,7 @@ let express = require("express");
 let router = express.Router();
 let Controllers = require("../controllers");
 
+// Routes for content
 router.post('/', (req, res) => {
     Controllers.contentController.createContent(req, res);
 })

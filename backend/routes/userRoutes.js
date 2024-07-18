@@ -2,6 +2,7 @@ let express = require("express");
 let router = express.Router();
 let Controllers = require("../controllers");
 
+// Routes for users
 router.post('/signin', (req, res) => {
     Controllers.userController.signin(req, res);
 })
