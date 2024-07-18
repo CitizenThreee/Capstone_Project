@@ -23,7 +23,7 @@ const tabSchema = new Schema({
     fpost: { type: [String], default: [] },
     rpost: { type: [String], default: []},
     contentSchema: { type: [contentSchema], default: [{ type: 'none' }] },
-    position: { type: Number, required: true, unique: true },
+    position: { type: Number, required: true},
     created_at: { type: Date, default: Date.now }
 });
 
