@@ -77,7 +77,7 @@ export default function InputBarContainer({perms={fpost: [], rpost: []}, schema=
                         
                         {/* Toggle between image and text input */}
                         {input.type == 'image' 
-                        ? <Form.Control type="text" value={input.image} name="image" onChange={onChangeInput} placeholder="https://imageexampleurl.com/image.jpg"/>
+                        ? <Form.Control type="text" value={input.img} name="img" onChange={onChangeInput} placeholder="https://imageexampleurl.com/image.jpg"/>
                         : <Form.Control type="text" value={input.title} name="title" onChange={onChangeInput} placeholder="Text"/>}
 
                         {/* Toggle between text types if tab is a 'page' */}
@@ -96,12 +96,14 @@ export default function InputBarContainer({perms={fpost: [], rpost: []}, schema=
                     
                     {/* Send button calls onPost function provided in params */}
                     <Button variant="outline-primary ms-2" onClick={() => {
-                        onPost({input: {...input}, type: schema.type, perms: {...perms}});
+                        onPost({input: {...input}, type: schema.type != 'page' ? schema.type : input.type , perms: {...perms}});
                         setInput({ ...defaultInputs });
                     }}>
                         Send
                     </Button>
                 </Form.Group>
+
+                {schema.img && <Form.Control size="sm" value={input.image} onChange={onChangeInput} name="image" placeholder="Image URL"/>}
 
                 {/* Description text area for posts */}
                 {schema.description && <Form.Control as="textarea" value={input.description} onChange={onChangeInput} name="description" placeholder="Description" className="mr-sm-2"/>}

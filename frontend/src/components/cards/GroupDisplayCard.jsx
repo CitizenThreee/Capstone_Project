@@ -18,7 +18,7 @@ export default function GroupDisplayCard({ data }) {
         .then(res => {
             setUserGroup(res.data.data)
         })
-        .catch(err => console.log(err))
+        .catch(err => { if(err.response.status == 500) console.log(err) })
     }, [])
 
     // When a user requests to join a group the function creates a new userGroup in the database

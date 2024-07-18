@@ -4,6 +4,7 @@ import { useCurrentTabContext } from "../../context/CurrentTabProvider";
 import Content from "../content/Content";
 import { useUserContext } from "../../context/UserProvider";
 import { useCurrentGroupContext } from "../../context/CurrentGroupProvider";
+import axios from 'axios';
 
 // The page tab renders page content pulled from the database
 export default function PageTab({ level }) {

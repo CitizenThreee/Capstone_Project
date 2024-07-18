@@ -12,7 +12,7 @@ const defaultContent = {
     rpost: [],
     isContainer: false,
     cType: "page",
-    image: false,
+    img: false,
     subTitle: false,
     description: false
 }
