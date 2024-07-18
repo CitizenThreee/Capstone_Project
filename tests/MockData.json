@@ -1,0 +1,27 @@
+{
+    "users": [
+        { },
+        null,
+        "undefined"
+    ],
+    "groups": [
+        { },
+        null,
+        "undefined"
+    ],
+    "tabs": [
+        { },
+        null,
+        "undefined"
+    ],
+    "content": [
+        { },
+        null,
+        "undefined"
+    ],
+    "userGroups": [
+        { },
+        null,
+        "undefined"
+    ]
+}
