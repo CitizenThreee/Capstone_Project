@@ -101,7 +101,7 @@ export default function ContentFormElement({ i, input, onSetInput, defaultConten
 
             {/* Content inputs available based off the type of content */}
             {["post"].includes(input.contentSchema[i].type) && 
-            <ContentFormSwitch name="image" title="Image" onChange={onChangeInput} value={input.contentSchema[i].image}/>}
+            <ContentFormSwitch name="img" title="Image" onChange={onChangeInput} value={input.contentSchema[i].img}/>}
 
             {["post" ].includes(input.contentSchema[i].type) && 
             <ContentFormSwitch name="subtitle" title="Subtitle" onChange={onChangeInput} value={input.contentSchema[i].subtitle}/>}
