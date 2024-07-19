@@ -83,6 +83,7 @@ export default function SignUpContainer() {
         if( passed ) {
             const userData = {
                 email: userInput.email,
+                cEmail: userInput.cEmail,
                 fname: userInput.fname,
                 lname: userInput.lname,
                 phone: userInput.phone,
@@ -90,12 +91,14 @@ export default function SignUpContainer() {
                 occupation: userInput.occupation,
                 website: userInput.website,
                 about: userInput.about,
-                location: userInput.location
+                location: userInput.location,
+                password: userInput.password,
+                cPassword: userInput.cPassword
             }
 
-            axios.post('http://localhost:8080/users', { ...userData, password: userInput.password })
+            axios.post('http://localhost:8080/users', { ...userData })
             .then(res => {
-                handleSetUser({...userData, groupIds: [], groupProfile: {}});
+                handleSetUser({...res.data.data, groupIds: [], groupProfile: {}});
                 navigate('/');
             })
             .catch(err => console.log(err));

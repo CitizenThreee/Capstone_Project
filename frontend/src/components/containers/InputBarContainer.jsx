@@ -70,18 +70,18 @@ export default function InputBarContainer({perms={fpost: [], rpost: []}, schema=
                         </Button>}
 
                         {/* Toggle between posting image or text element */}
-                        {schema.type == 'page' && <Button className="d-flex" variant="outline-primary" onClick={() => 
+                        {currentTab.tab.type == 'page' && <Button className="d-flex" variant="outline-primary" onClick={() => 
                             setInput({...input, type: input.type == 'text' ? 'image' : 'text'})}>
                             {input.type}
                         </Button>}
                         
                         {/* Toggle between image and text input */}
                         {input.type == 'image' 
-                        ? <Form.Control type="text" value={input.img} name="img" onChange={onChangeInput} placeholder="https://imageexampleurl.com/image.jpg"/>
+                        ? <Form.Control type="text" value={input.image} name="image" onChange={onChangeInput} placeholder="https://imageexampleurl.com/image.jpg"/>
                         : <Form.Control type="text" value={input.title} name="title" onChange={onChangeInput} placeholder="Text"/>}
 
                         {/* Toggle between text types if tab is a 'page' */}
-                        {(schema.type == 'page' && input.type == 'text') && <Dropdown>
+                        {(currentTab.tab.type == 'page' && input.type == 'text') && <Dropdown>
                             <Dropdown.Toggle className="text-capitalize" variant="outline-primary">
                                 {input.size}
                             </Dropdown.Toggle>
@@ -96,7 +96,7 @@ export default function InputBarContainer({perms={fpost: [], rpost: []}, schema=
                     
                     {/* Send button calls onPost function provided in params */}
                     <Button variant="outline-primary ms-2" onClick={() => {
-                        onPost({input: {...input}, type: schema.type != 'page' ? schema.type : input.type , perms: {...perms}});
+                        onPost({input: {...input}, type: currentTab.tab.type != 'page' ? schema.type : input.type , perms: {...perms}});
                         setInput({ ...defaultInputs });
                     }}>
                         Send
